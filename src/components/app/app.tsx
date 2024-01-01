@@ -23,7 +23,6 @@ function App(): JSX.Element {
             <Route path={AppRoute.Booking} element={<Booking />} />
             <Route path={AppRoute.Reservation} element={<Reservation />} />
             <Route path={AppRoute.Contacts} element={<Contacts />} />
-
             <Route path={AppRoute.Login} element={<Login />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
