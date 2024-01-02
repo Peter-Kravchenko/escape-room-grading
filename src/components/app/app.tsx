@@ -1,6 +1,6 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import Main from '../../pages/main/main';
 import Quest from '../../pages/quest/quest';
 import Login from '../../pages/login/login';
@@ -9,6 +9,7 @@ import Reservation from '../../pages/reservation/reservation';
 import Contacts from '../../pages/contacts/contacts';
 import Layout from '../layout/layout';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
+import PrivateRoute from '../private-route/private-route';
 
 function App(): JSX.Element {
   return (
@@ -17,8 +18,22 @@ function App(): JSX.Element {
         <Route path={AppRoute.Main} element={<Layout />}>
           <Route index element={<Main />} />
           <Route path={AppRoute.Quest} element={<Quest />} />
-          <Route path={AppRoute.Booking} element={<Booking />} />
-          <Route path={AppRoute.Reservation} element={<Reservation />} />
+          <Route
+            path={AppRoute.Booking}
+            element={
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                <Booking />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.Reservation}
+            element={
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                <Reservation />
+              </PrivateRoute>
+            }
+          />
           <Route path={AppRoute.Contacts} element={<Contacts />} />
           <Route path={AppRoute.Login} element={<Login />} />
         </Route>

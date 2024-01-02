@@ -27,9 +27,16 @@ function Header(): JSX.Element {
           </ul>
         </nav>
         <div className="header__side-nav">
-          <a className="btn btn--accent header__side-item" href="#">
-            Выйти
+          <a
+            className="btn header__side-item header__login-btn"
+            href="login.html"
+          >
+            Вход
           </a>
+
+          {/* <a className="btn btn--accent header__side-item" href="#">
+            Выйти
+          </a> */}
           <a
             className="link header__side-item header__phone-link"
             href="tel:88003335599"
