@@ -1,7 +1,5 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
-import HistoryRouter from '../history-route/history-route';
-import browserHistory from '../../browser-history';
 import { AppRoute } from '../../const';
 import Main from '../../pages/main/main';
 import Quest from '../../pages/quest/quest';
@@ -15,19 +13,17 @@ import PageNotFound from '../../pages/page-not-found/page-not-found';
 function App(): JSX.Element {
   return (
     <HelmetProvider>
-      <HistoryRouter history={browserHistory}>
-        <Routes>
-          <Route path={AppRoute.Main} element={<Layout />}>
-            <Route index element={<Main />} />
-            <Route path={AppRoute.Quest} element={<Quest />} />
-            <Route path={AppRoute.Booking} element={<Booking />} />
-            <Route path={AppRoute.Reservation} element={<Reservation />} />
-            <Route path={AppRoute.Contacts} element={<Contacts />} />
-            <Route path={AppRoute.Login} element={<Login />} />
-          </Route>
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </HistoryRouter>
+      <Routes>
+        <Route path={AppRoute.Main} element={<Layout />}>
+          <Route index element={<Main />} />
+          <Route path={AppRoute.Quest} element={<Quest />} />
+          <Route path={AppRoute.Booking} element={<Booking />} />
+          <Route path={AppRoute.Reservation} element={<Reservation />} />
+          <Route path={AppRoute.Contacts} element={<Contacts />} />
+          <Route path={AppRoute.Login} element={<Login />} />
+        </Route>
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
     </HelmetProvider>
   );
 }

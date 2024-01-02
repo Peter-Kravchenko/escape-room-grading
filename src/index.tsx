@@ -4,6 +4,11 @@ import { ToastContainer } from 'react-toastify';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { store } from './store';
+import browserHistory from './browser-history';
+import HistoryRouter from './components/history-route/history-route';
+import { fetchQuests } from './store/api-actions';
+
+store.dispatch(fetchQuests());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -12,13 +17,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ToastContainer
-        theme="dark"
-        position="bottom-center"
-        autoClose={3000}
-        pauseOnFocusLoss={false}
-      />
-      <App />
+      <HistoryRouter history={browserHistory}>
+        <App />
+        <ToastContainer />
+      </HistoryRouter>
     </Provider>
   </React.StrictMode>
 );

@@ -24,9 +24,8 @@ export enum AuthorizationStatus {
 
 export enum NameSpace {
   App = 'APP',
-  Booking = 'BOOKING',
-  Reservation = 'RESERVATION',
-  Quest = 'QUEST',
+  Quests = 'QUESTS',
+  Reservations = 'RESERVATIONS',
   User = 'USER',
 }
 
@@ -35,4 +34,25 @@ export enum RequestStatus {
   Pending = 'Pending',
   Success = 'Success',
   Rejected = 'Rejected',
+}
+
+export enum QuestLevel {
+  All = 'all',
+  Easy = 'easy',
+  Medium = 'medium',
+  Hard = 'hard',
+}
+
+export enum QuestType {
+  All = 'all',
+  Adventures = 'adventures',
+  Horror = 'horror',
+  Mystic = 'mystic',
+  Detective = 'detective',
+  SciFi = 'sci-fi',
+}
+
+export enum Date {
+  Today = 'today',
+  Tomorrow = 'tomorrow',
 }
