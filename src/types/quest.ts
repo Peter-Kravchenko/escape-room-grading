@@ -8,7 +8,7 @@ export type TQuests = {
   level: QuestLevel;
   type: QuestType;
   peopleMinMax: [number, number];
-}[];
+};
 
 export type TQuest = {
   id: string;

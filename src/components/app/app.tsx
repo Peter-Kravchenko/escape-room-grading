@@ -2,7 +2,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import Main from '../../pages/main/main';
-import Quest from '../../pages/quest/quest';
+import QuestDetails from '../../pages/quest-details/quest-datails';
 import Login from '../../pages/login/login';
 import Booking from '../../pages/booking/booking';
 import Reservation from '../../pages/reservation/reservation';
@@ -17,7 +17,7 @@ function App(): JSX.Element {
       <Routes>
         <Route path={AppRoute.Main} element={<Layout />}>
           <Route index element={<Main />} />
-          <Route path={AppRoute.Quest} element={<Quest />} />
+          <Route path={`${AppRoute.Quest}/:id`} element={<QuestDetails />} />
           <Route
             path={AppRoute.Booking}
             element={
