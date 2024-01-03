@@ -4,14 +4,31 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import Main from '../../pages/main/main';
 import QuestDetails from '../../pages/quest-details/quest-datails';
 import Login from '../../pages/login/login';
-import Booking from '../../pages/booking/booking';
+import QuestBooking from '../../pages/quest-booking/quest-booking';
 import Reservation from '../../pages/reservation/reservation';
 import Contacts from '../../pages/contacts/contacts';
 import Layout from '../layout/layout';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
 import PrivateRoute from '../private-route/private-route';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-data/user-data.selectors';
+import { useEffect } from 'react';
+import { fetchReservations } from '../../store/api-actions';
 
 function App(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const authStatus = useAppSelector(getAuthorizationStatus);
+
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchReservations());
+    }
+  });
+
+  if (authStatus === AuthorizationStatus.Unknown) {
+    return <h2>Loading...</h2>;
+  }
+
   return (
     <HelmetProvider>
       <Routes>
@@ -19,17 +36,17 @@ function App(): JSX.Element {
           <Route index element={<Main />} />
           <Route path={`${AppRoute.Quest}/:id`} element={<QuestDetails />} />
           <Route
-            path={AppRoute.Booking}
+            path={`${AppRoute.Quest}/:id/booking`}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-                <Booking />
+              <PrivateRoute authorizationStatus={authStatus}>
+                <QuestBooking />
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.Reservation}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute authorizationStatus={authStatus}>
                 <Reservation />
               </PrivateRoute>
             }

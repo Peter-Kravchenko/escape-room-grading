@@ -6,7 +6,7 @@ import { APIRoute, NameSpace } from '../const';
 import { toast } from 'react-toastify';
 import { TBookingInfo, TQuestBookings } from '../types/booking';
 import { TReservation, TReservations } from '../types/reservations';
-import { TUser } from '../types/user';
+import { TAuthData, TUser } from '../types/user';
 import { dropToken, saveToken } from '../services/token';
 
 type TExtra = {
@@ -109,11 +109,14 @@ export const checkAuth = createAsyncThunk<TUser, undefined, TExtra>(
   }
 );
 
-export const login = createAsyncThunk<TUser, undefined, TExtra>(
+export const login = createAsyncThunk<TUser, TAuthData, TExtra>(
   `${NameSpace.User}/login`,
-  async (_arg, { extra: api }) => {
+  async ({ email, password }, { extra: api }) => {
     const { data } = await api
-      .post<TUser>(APIRoute.Login)
+      .post<TUser>(APIRoute.Login, {
+        email,
+        password,
+      })
       .catch((err: AxiosError) => {
         throw toast.error(err.message);
       });

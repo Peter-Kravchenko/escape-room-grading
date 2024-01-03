@@ -12,7 +12,7 @@ const initialState: TQuestsData = {
   quest: null,
   quests: [],
   questBookings: null,
-  booking: null,
+  bookingInfo: null,
 
   questFetchingStatus: RequestStatus.Idle,
   questsFetchingStatus: RequestStatus.Idle,
@@ -61,7 +61,7 @@ export const questsData = createSlice({
       })
       .addCase(addToBooking.fulfilled, (state, action) => {
         state.bookingFetchingStatus = RequestStatus.Success;
-        state.booking = action.payload;
+        state.bookingInfo = action.payload;
       })
       .addCase(addToBooking.rejected, (state) => {
         state.bookingFetchingStatus = RequestStatus.Rejected;

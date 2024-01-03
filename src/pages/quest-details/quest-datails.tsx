@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { fetchQuest } from '../../store/api-actions';
@@ -6,8 +6,9 @@ import {
   getQuest,
   getQuestFetchingStatus,
 } from '../../store/quests-data/quests-data.selectors';
-import { RequestStatus } from '../../const';
+import { AppRoute, RequestStatus } from '../../const';
 import BookButton from '../../components/book-button/book-button';
+import { TQuest } from '../../types/quest';
 
 function QuestDetails(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ function QuestDetails(): JSX.Element {
     }
   }, [dispatch, id]);
 
-  const quest = useAppSelector(getQuest);
+  const quest = useAppSelector(getQuest) as TQuest;
   const questFetchingStatus = useAppSelector(getQuestFetchingStatus);
 
   if (questFetchingStatus === RequestStatus.Pending) {
@@ -68,7 +69,12 @@ function QuestDetails(): JSX.Element {
             </li>
           </ul>
           <p className="quest-page__description">{quest?.description}</p>
-          <BookButton />
+          <Link
+            to={`${AppRoute.Quest}/${quest?.id}/booking`}
+            className="btn btn--accent btn--cta quest-page__btn"
+          >
+            Забронировать
+          </Link>
         </div>
       </div>
     </main>

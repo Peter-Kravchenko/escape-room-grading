@@ -39,7 +39,7 @@ function Header(): JSX.Element {
             </li>
             {isAuth && (
               <li className="main-nav__item">
-                <Link to={AppRoute.Booking} className="link">
+                <Link to={AppRoute.Reservation} className="link">
                   Мои бронирования
                 </Link>
               </li>

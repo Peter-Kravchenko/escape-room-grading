@@ -1,4 +1,38 @@
-function Booking(): JSX.Element {
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { fetchQuest, fetchQuestBookings } from '../../store/api-actions';
+import {
+  getQuest,
+  getQuestBookings,
+  getQuestBookingsFetchingStatus,
+} from '../../store/quests-data/quests-data.selectors';
+import { TQuestBookings } from '../../types/booking';
+import { RequestStatus } from '../../const';
+import { TQuest } from '../../types/quest';
+
+function QuestBooking(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchQuestBookings(id));
+    }
+  }, [dispatch, id]);
+
+  const quest = useAppSelector(getQuest) as TQuest;
+  const questBooking = useAppSelector(getQuestBookings) as TQuestBookings;
+  const questBookingFetchingStatus = useAppSelector(
+    getQuestBookingsFetchingStatus
+  );
+
+  console.log(questBooking);
+
+  if (questBookingFetchingStatus === RequestStatus.Pending) {
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <main className="page-content decorated-page">
       <div className="decorated-page__decor" aria-hidden="true">
@@ -22,7 +56,7 @@ function Booking(): JSX.Element {
             Бронирование квеста
           </h1>
           <p className="title title--size-m title--uppercase page-content__title">
-            Маньяк
+            {quest?.title}
           </p>
         </div>
         <div className="page-content__item">
@@ -46,58 +80,18 @@ function Booking(): JSX.Element {
             <fieldset className="booking-form__date-section">
               <legend className="booking-form__date-title">Сегодня</legend>
               <div className="booking-form__date-inner-wrapper">
-                <label className="custom-radio booking-form__date">
-                  <input
-                    type="radio"
-                    id="today9h45m"
-                    name="date"
-                    required
-                    defaultValue="today9h45m"
-                  />
-                  <span className="custom-radio__label">9:45</span>
-                </label>
-                <label className="custom-radio booking-form__date">
-                  <input
-                    type="radio"
-                    id="today15h00m"
-                    name="date"
-                    defaultChecked
-                    required
-                    defaultValue="today15h00m"
-                  />
-                  <span className="custom-radio__label">15:00</span>
-                </label>
-                <label className="custom-radio booking-form__date">
-                  <input
-                    type="radio"
-                    id="today17h30m"
-                    name="date"
-                    required
-                    defaultValue="today17h30m"
-                  />
-                  <span className="custom-radio__label">17:30</span>
-                </label>
-                <label className="custom-radio booking-form__date">
-                  <input
-                    type="radio"
-                    id="today19h30m"
-                    name="date"
-                    required
-                    defaultValue="today19h30m"
-                    disabled
-                  />
-                  <span className="custom-radio__label">19:30</span>
-                </label>
-                <label className="custom-radio booking-form__date">
-                  <input
-                    type="radio"
-                    id="today21h30m"
-                    name="date"
-                    required
-                    defaultValue="today21h30m"
-                  />
-                  <span className="custom-radio__label">21:30</span>
-                </label>
+                {
+                  <label className="custom-radio booking-form__date">
+                    <input
+                      type="radio"
+                      id="today9h45m"
+                      name="date"
+                      required
+                      defaultValue="today9h45m"
+                    />
+                    <span className="custom-radio__label">9:45</span>
+                  </label>
+                }
               </div>
             </fieldset>
             <fieldset className="booking-form__date-section">
@@ -247,4 +241,4 @@ function Booking(): JSX.Element {
   );
 }
 
-export default Booking;
+export default QuestBooking;

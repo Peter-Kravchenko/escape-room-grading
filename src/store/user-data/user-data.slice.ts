@@ -12,7 +12,11 @@ const initialState: TUserData = {
 export const userData = createSlice({
   name: NameSpace.User,
   initialState,
-  reducers: {},
+  reducers: {
+    resetLoginStatus: (state) => {
+      state.loginStatus = RequestStatus.Idle;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(checkAuth.pending, (state) => {
@@ -41,3 +45,5 @@ export const userData = createSlice({
       });
   },
 });
+
+export const { resetLoginStatus } = userData.actions;
