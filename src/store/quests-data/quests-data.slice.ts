@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace, RequestStatus } from '../../const';
 import { TQuestsData } from '../../types/state';
 import {
@@ -7,13 +7,14 @@ import {
   fetchQuestBookings,
   fetchQuests,
 } from '../api-actions';
+import { TQuestBookings } from '../../types/booking';
 
 const initialState: TQuestsData = {
   quest: null,
   quests: [],
   questBookings: null,
+  selectedLocatoin: null,
   bookingInfo: null,
-
   questFetchingStatus: RequestStatus.Idle,
   questsFetchingStatus: RequestStatus.Idle,
   questBookingsFetchingStatus: RequestStatus.Idle,
@@ -23,7 +24,11 @@ const initialState: TQuestsData = {
 export const questsData = createSlice({
   name: NameSpace.Quests,
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedLocation: (state, action: PayloadAction<TQuestBookings>) => {
+      state.selectedLocatoin = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchQuest.pending, (state) => {
@@ -52,6 +57,7 @@ export const questsData = createSlice({
       .addCase(fetchQuestBookings.fulfilled, (state, action) => {
         state.questBookingsFetchingStatus = RequestStatus.Success;
         state.questBookings = action.payload;
+        state.selectedLocatoin = action.payload[0];
       })
       .addCase(fetchQuestBookings.rejected, (state) => {
         state.questBookingsFetchingStatus = RequestStatus.Rejected;
@@ -68,3 +74,5 @@ export const questsData = createSlice({
       });
   },
 });
+
+export const { setSelectedLocation } = questsData.actions;

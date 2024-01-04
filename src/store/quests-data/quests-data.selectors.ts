@@ -17,6 +17,11 @@ export const getQuestBookings = createSelector(
   (state: TQuestsData) => state.questBookings
 );
 
+export const getSelectedLocation = createSelector(
+  (state: TAppState) => state[NameSpace.Quests],
+  (state: TQuestsData) => state.selectedLocatoin
+);
+
 export const getQuestFetchingStatus = createSelector(
   (state: TAppState) => state[NameSpace.Quests],
   (state: TQuestsData) => state.questFetchingStatus

@@ -20,6 +20,7 @@ export type TQuestsData = {
   quest: TQuest | null;
   quests: TQuests[];
   questBookings: TQuestBookings | null;
+  selectedLocatoin: TQuestBookings | null;
   bookingInfo: TBookingInfo | null;
   questFetchingStatus: RequestStatus;
   questsFetchingStatus: RequestStatus;
