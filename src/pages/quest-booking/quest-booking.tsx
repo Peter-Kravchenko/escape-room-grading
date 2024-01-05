@@ -6,6 +6,7 @@ import {
   getQuest,
   getQuestBookings,
   getQuestBookingsFetchingStatus,
+  getQuestFetchingStatus,
 } from '../../store/quests-data/quests-data.selectors';
 import { TQuestBookings } from '../../types/booking';
 import { RequestStatus } from '../../const';
@@ -19,52 +20,60 @@ function QuestBooking(): JSX.Element {
 
   useEffect(() => {
     if (id) {
+      dispatch(fetchQuest(id));
       dispatch(fetchQuestBookings(id));
     }
   }, [dispatch, id]);
 
   const quest = useAppSelector(getQuest) as TQuest;
   const questLocations = useAppSelector(getQuestBookings) as TQuestBookings;
+  const questFetchingStatus = useAppSelector(getQuestFetchingStatus);
   const questLocationsFetchingStatus = useAppSelector(
     getQuestBookingsFetchingStatus
   );
 
-  if (questLocationsFetchingStatus === RequestStatus.Pending) {
+  if (
+    questLocationsFetchingStatus === RequestStatus.Pending ||
+    questFetchingStatus === RequestStatus.Pending
+  ) {
     return <h1>Loading...</h1>;
   }
 
   return (
-    <main className="page-content decorated-page">
-      <div className="decorated-page__decor" aria-hidden="true">
-        <picture>
-          <source
-            type="image/webp"
-            srcSet="img/content/maniac/maniac-bg-size-m.webp, img/content/maniac/maniac-bg-size-m@2x.webp 2x"
-          />
-          <img
-            src="img/content/maniac/maniac-bg-size-m.jpg"
-            srcSet="img/content/maniac/maniac-bg-size-m@2x.jpg 2x"
-            width={1366}
-            height={1959}
-            alt=""
-          />
-        </picture>
-      </div>
-      <div className="container container--size-s">
-        <div className="page-content__title-wrapper">
-          <h1 className="subtitle subtitle--size-l page-content__subtitle">
-            Бронирование квеста
-          </h1>
-          <p className="title title--size-m title--uppercase page-content__title">
-            {quest?.title}
-          </p>
+    quest &&
+    id && (
+      <main className="page-content decorated-page">
+        <div className="decorated-page__decor" aria-hidden="true">
+          <picture>
+            <source
+              type="image/webp"
+              srcSet="img/content/maniac/maniac-bg-size-m.webp, img/content/maniac/maniac-bg-size-m@2x.webp 2x"
+            />
+            <img
+              src="img/content/maniac/maniac-bg-size-m.jpg"
+              srcSet="img/content/maniac/maniac-bg-size-m@2x.jpg 2x"
+              width={1366}
+              height={1959}
+              alt=""
+            />
+          </picture>
         </div>
-        <div className="page-content__item">
-          <MapBooking questLocations={questLocations} />
+        <div className="container container--size-s">
+          <div className="page-content__title-wrapper">
+            <h1 className="subtitle subtitle--size-l page-content__subtitle">
+              Бронирование квеста
+            </h1>
+            <p className="title title--size-m title--uppercase page-content__title">
+              {quest?.title}
+            </p>
+          </div>
+          <div className="page-content__item">
+            <MapBooking questLocations={questLocations} />
+          </div>
+          <BookingForm questId={id} peopleCount={quest?.peopleMinMax} />
         </div>
-        <BookingForm />
-      </div>
-    </main>
+      </main>
+    )
   );
 }
 

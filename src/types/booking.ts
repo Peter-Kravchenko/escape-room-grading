@@ -5,7 +5,7 @@ export type TLocation = {
   coords: [number, number];
 };
 
-type TSlot = {
+export type TSlot = {
   time: string;
   isAvailable: boolean;
 };
@@ -27,4 +27,13 @@ export type TBookingInfo = {
   withChildren: boolean;
   peopleCount: number;
   placeId: string;
+};
+
+export type TBookingFormValues = {
+  date: Date;
+  name: string;
+  tel: string;
+  person: number;
+  children: boolean;
+  agreement: boolean;
 };

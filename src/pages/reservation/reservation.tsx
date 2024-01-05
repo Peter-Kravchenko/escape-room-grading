@@ -1,4 +1,12 @@
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getReservations } from '../../store/reservation-data/reservation-data.selectors';
+
 function Reservation(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const userReservations = useAppSelector(getReservations);
+
+  console.log(userReservations);
+
   return (
     <main className="page-content decorated-page">
       <div className="decorated-page__decor" aria-hidden="true">

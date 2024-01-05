@@ -7,10 +7,11 @@ import App from './components/app/app';
 import { store } from './store';
 import browserHistory from './browser-history';
 import HistoryRouter from './components/history-route/history-route';
-import { checkAuth, fetchQuests } from './store/api-actions';
+import { checkAuth, fetchQuests, fetchReservations } from './store/api-actions';
 
 store.dispatch(fetchQuests());
 store.dispatch(checkAuth());
+store.dispatch(fetchReservations());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

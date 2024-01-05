@@ -53,17 +53,19 @@ export const fetchQuestBookings = createAsyncThunk<
 });
 
 export const addToBooking = createAsyncThunk<
-  TBookingInfo,
-  TQuestBookings['id'],
+  void,
+  { currentData: TBookingInfo; questId: TQuestBookings['id'] },
   TExtra
->(`${NameSpace.Quests}/questBooking`, async (questId, { extra: api }) => {
-  const { data } = await api
-    .post<TBookingInfo>(`${APIRoute.Quest}/${questId}/booking`)
-    .catch((err: AxiosError) => {
-      throw toast.error(err.message);
-    });
-  return data;
-});
+>(
+  `${NameSpace.Quests}/questBooking`,
+  async ({ currentData, questId }, { extra: api }) => {
+    await api
+      .post<TBookingInfo>(`${APIRoute.Quest}/${questId}/booking`, currentData)
+      .catch((err: AxiosError) => {
+        throw toast.error(err.message);
+      });
+  }
+);
 
 export const fetchReservations = createAsyncThunk<
   TReservations,

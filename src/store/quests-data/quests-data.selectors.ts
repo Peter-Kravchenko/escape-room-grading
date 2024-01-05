@@ -36,3 +36,8 @@ export const getQuestBookingsFetchingStatus = createSelector(
   (state: TAppState) => state[NameSpace.Quests],
   (state: TQuestsData) => state.questBookingsFetchingStatus
 );
+
+export const getAddToBookingFetchingStatus = createSelector(
+  (state: TAppState) => state[NameSpace.Quests],
+  (state: TQuestsData) => state.addToBookingFetchingStatus
+);

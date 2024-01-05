@@ -25,7 +25,7 @@ export type TQuestsData = {
   questFetchingStatus: RequestStatus;
   questsFetchingStatus: RequestStatus;
   questBookingsFetchingStatus: RequestStatus;
-  bookingFetchingStatus: RequestStatus;
+  addToBookingFetchingStatus: RequestStatus;
 };
 
 export type TReservationData = {

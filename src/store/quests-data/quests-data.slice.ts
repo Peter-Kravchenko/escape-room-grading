@@ -18,7 +18,7 @@ const initialState: TQuestsData = {
   questFetchingStatus: RequestStatus.Idle,
   questsFetchingStatus: RequestStatus.Idle,
   questBookingsFetchingStatus: RequestStatus.Idle,
-  bookingFetchingStatus: RequestStatus.Idle,
+  addToBookingFetchingStatus: RequestStatus.Idle,
 };
 
 export const questsData = createSlice({
@@ -63,14 +63,14 @@ export const questsData = createSlice({
         state.questBookingsFetchingStatus = RequestStatus.Rejected;
       })
       .addCase(addToBooking.pending, (state) => {
-        state.bookingFetchingStatus = RequestStatus.Pending;
+        state.addToBookingFetchingStatus = RequestStatus.Pending;
       })
       .addCase(addToBooking.fulfilled, (state, action) => {
-        state.bookingFetchingStatus = RequestStatus.Success;
+        state.addToBookingFetchingStatus = RequestStatus.Success;
         state.bookingInfo = action.payload;
       })
       .addCase(addToBooking.rejected, (state) => {
-        state.bookingFetchingStatus = RequestStatus.Rejected;
+        state.addToBookingFetchingStatus = RequestStatus.Rejected;
       });
   },
 });

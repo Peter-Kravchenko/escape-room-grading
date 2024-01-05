@@ -19,7 +19,7 @@ function Login(): JSX.Element {
   const dispatch = useAppDispatch();
   const loginSendingStatus = useAppSelector(getLoginStatus);
 
-  const isUIBlocked = loginSendingStatus === RequestStatus.Rejected;
+  const isUIBlocked = loginSendingStatus === RequestStatus.Pending;
 
   const [formData, setFormData] = useState<TAuthData>({
     email: '',
