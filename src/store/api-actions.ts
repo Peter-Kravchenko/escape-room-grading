@@ -84,18 +84,17 @@ export const fetchReservations = createAsyncThunk<
 );
 
 export const deleteReservation = createAsyncThunk<
-  TReservations,
+  void,
   TReservation['id'],
   TExtra
 >(
   `${NameSpace.Reservations}/deleteReservation`,
   async (reservationId, { extra: api }) => {
-    const { data } = await api
+    await api
       .delete<TReservation['id']>(`${APIRoute.Reservation}/${reservationId}`)
       .catch((err: AxiosError) => {
         throw toast.error(err.message);
       });
-    return data;
   }
 );
 

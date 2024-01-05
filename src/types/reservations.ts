@@ -1,3 +1,4 @@
+import { Date } from '../const';
 import { TLocation } from './booking';
 import { TQuests } from './quest';
 

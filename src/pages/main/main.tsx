@@ -1,7 +1,11 @@
 import Filters from '../../components/filters/filters';
 import QuestsList from '../../components/quests-list/quests-list';
+import { useAppSelector } from '../../hooks';
+import { getQuests } from '../../store/quests-data/quests-data.selectors';
 
 function Main(): JSX.Element {
+  const quests = useAppSelector(getQuests);
+
   return (
     <main className="page-content">
       <div className="container">
@@ -15,7 +19,7 @@ function Main(): JSX.Element {
         </div>
         <Filters />
         <h2 className="title visually-hidden">Выберите квест</h2>
-        <QuestsList />
+        <QuestsList quests={quests} isReservation={false} />
       </div>
     </main>
   );
