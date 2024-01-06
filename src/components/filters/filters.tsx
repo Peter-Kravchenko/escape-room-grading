@@ -1,123 +1,92 @@
-function Filters(): JSX.Element {
+import {
+  QuestLevel,
+  QuestLevelsInRus,
+  QuestType,
+  QuestTypesInRus,
+} from '../../const';
+import { useAppDispatch } from '../../hooks';
+import {
+  setActiveQuestLevel,
+  setActiveQuestType,
+} from '../../store/app-process/app-process.slice';
+import { TQuests } from '../../types/quest';
+
+type FiltersProps = {
+  activeQuestType: TQuests['type'];
+  activeQuestLevel: TQuests['level'];
+};
+
+function Filters({
+  activeQuestType,
+  activeQuestLevel,
+}: FiltersProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="page-content__item">
       <form className="filter" action="#" method="get">
         <fieldset className="filter__section">
           <legend className="visually-hidden">Тематика</legend>
           <ul className="filter__list">
-            <li className="filter__item">
-              <input type="radio" name="type" id="all" defaultChecked />
-              <label className="filter__label" htmlFor="all">
-                <svg
-                  className="filter__icon"
-                  width={26}
-                  height={30}
-                  aria-hidden="true"
-                >
-                  <use xlinkHref="#icon-all-quests" />
-                </svg>
-                <span className="filter__label-text">Все квесты</span>
-              </label>
-            </li>
-            <li className="filter__item">
-              <input type="radio" name="type" id="adventure" />
-              <label className="filter__label" htmlFor="adventure">
-                <svg
-                  className="filter__icon"
-                  width={36}
-                  height={30}
-                  aria-hidden="true"
-                >
-                  <use xlinkHref="#icon-adventure" />
-                </svg>
-                <span className="filter__label-text">Приключения</span>
-              </label>
-            </li>
-            <li className="filter__item">
-              <input type="radio" name="type" id="horror" />
-              <label className="filter__label" htmlFor="horror">
-                <svg
-                  className="filter__icon"
-                  width={30}
-                  height={30}
-                  aria-hidden="true"
-                >
-                  <use xlinkHref="#icon-horror" />
-                </svg>
-                <span className="filter__label-text">Ужасы</span>
-              </label>
-            </li>
-            <li className="filter__item">
-              <input type="radio" name="type" id="mystic" />
-              <label className="filter__label" htmlFor="mystic">
-                <svg
-                  className="filter__icon"
-                  width={30}
-                  height={30}
-                  aria-hidden="true"
-                >
-                  <use xlinkHref="#icon-mystic" />
-                </svg>
-                <span className="filter__label-text">Мистика</span>
-              </label>
-            </li>
-            <li className="filter__item">
-              <input type="radio" name="type" id="detective" />
-              <label className="filter__label" htmlFor="detective">
-                <svg
-                  className="filter__icon"
-                  width={40}
-                  height={30}
-                  aria-hidden="true"
-                >
-                  <use xlinkHref="#icon-detective" />
-                </svg>
-                <span className="filter__label-text">Детектив</span>
-              </label>
-            </li>
-            <li className="filter__item">
-              <input type="radio" name="type" id="sciFi" />
-              <label className="filter__label" htmlFor="sciFi">
-                <svg
-                  className="filter__icon"
-                  width={28}
-                  height={30}
-                  aria-hidden="true"
-                >
-                  <use xlinkHref="#icon-sci-fi" />
-                </svg>
-                <span className="filter__label-text">Sci-fi</span>
-              </label>
-            </li>
+            {Array.from(Object.values(QuestType)).map((type) => (
+              <li className="filter__item" key={type}>
+                <input
+                  type="radio"
+                  name="type"
+                  id={type}
+                  checked={activeQuestType === type}
+                  onClick={() => {
+                    dispatch(
+                      setActiveQuestType(type === activeQuestType ? null : type)
+                    );
+                  }}
+                />
+                <label className="filter__label" htmlFor={type}>
+                  <svg
+                    className="filter__icon"
+                    width={22}
+                    height={18}
+                    aria-hidden="true"
+                  >
+                    <use
+                      xlinkHref={`#icon-${
+                        type === QuestType.Adventures ? 'adventure' : type
+                      }`}
+                    />
+                  </svg>
+                  <span className="filter__label-text">
+                    {QuestTypesInRus[type]}
+                  </span>
+                </label>
+              </li>
+            ))}
           </ul>
         </fieldset>
         <fieldset className="filter__section">
           <legend className="visually-hidden">Сложность</legend>
           <ul className="filter__list">
-            <li className="filter__item">
-              <input type="radio" name="level" id="any" defaultChecked />
-              <label className="filter__label" htmlFor="any">
-                <span className="filter__label-text">Любой</span>
-              </label>
-            </li>
-            <li className="filter__item">
-              <input type="radio" name="level" id="easy" />
-              <label className="filter__label" htmlFor="easy">
-                <span className="filter__label-text">Лёгкий</span>
-              </label>
-            </li>
-            <li className="filter__item">
-              <input type="radio" name="level" id="middle" />
-              <label className="filter__label" htmlFor="middle">
-                <span className="filter__label-text">Средний</span>
-              </label>
-            </li>
-            <li className="filter__item">
-              <input type="radio" name="level" id="hard" />
-              <label className="filter__label" htmlFor="hard">
-                <span className="filter__label-text">Сложный</span>
-              </label>
-            </li>
+            {Array.from(Object.values(QuestLevel)).map((level) => (
+              <li className="filter__item" key={level}>
+                <input
+                  type="radio"
+                  name="level"
+                  id={level}
+                  checked={activeQuestLevel === level}
+                  onClick={() => {
+                    dispatch(
+                      setActiveQuestLevel(
+                        level === activeQuestLevel ? null : level
+                      )
+                    );
+                  }}
+                />
+                <label className="filter__label" htmlFor={level}>
+                  <span className="filter__label-text">
+                    {QuestLevelsInRus[level]}
+                  </span>
+                </label>
+              </li>
+            ))}
           </ul>
         </fieldset>
       </form>

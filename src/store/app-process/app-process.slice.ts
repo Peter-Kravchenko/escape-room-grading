@@ -19,12 +19,15 @@ export const appProcess = createSlice({
     setActiveQuestLevel: (state, action: PayloadAction<QuestLevel>) => {
       state.activeQuestLevel = action.payload;
     },
-    resetApp: (state) => {
+    resetFilters: (state) => {
       state.activeQuestType = QuestType.All;
       state.activeQuestLevel = QuestLevel.All;
     },
   },
 });
 
-export const { setActiveQuestType, setActiveQuestLevel, resetApp } =
-  appProcess.actions;
+export const {
+  setActiveQuestType,
+  setActiveQuestLevel,
+  resetFilters: resetApp,
+} = appProcess.actions;

@@ -8,6 +8,10 @@ function Reservation(): JSX.Element {
   const dispatch = useAppDispatch();
   const userReservations = useAppSelector(getReservations);
 
+  useEffect(() => {
+    dispatch(fetchReservations());
+  }, [dispatch]);
+
   return (
     <main className="page-content decorated-page">
       <div className="decorated-page__decor" aria-hidden="true">

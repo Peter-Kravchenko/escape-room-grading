@@ -44,13 +44,29 @@ export enum QuestLevel {
 }
 
 export enum QuestType {
-  All = 'all',
+  All = 'all-quests',
   Adventures = 'adventures',
   Horror = 'horror',
   Mystic = 'mystic',
   Detective = 'detective',
   SciFi = 'sci-fi',
 }
+
+export const QuestLevelsInRus: Record<QuestLevel, string> = {
+  [QuestLevel.All]: 'Все',
+  [QuestLevel.Easy]: 'Легкий',
+  [QuestLevel.Medium]: 'Средний',
+  [QuestLevel.Hard]: 'Сложный',
+};
+
+export const QuestTypesInRus: Record<QuestType, string> = {
+  [QuestType.All]: 'Все',
+  [QuestType.Adventures]: 'Приключения',
+  [QuestType.Horror]: 'Ужасы',
+  [QuestType.Mystic]: 'Мистика',
+  [QuestType.Detective]: 'Детектив',
+  [QuestType.SciFi]: 'Sci-Fi',
+};
 
 export enum Date {
   Today = 'today',

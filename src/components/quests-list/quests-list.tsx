@@ -1,10 +1,11 @@
-import { useAppSelector } from '../../hooks';
-import { getQuests } from '../../store/quests-data/quests-data.selectors';
+import { TQuests } from '../../types/quest';
 import QuestCard from '../quest-card/quest-card';
 
-function QuestsList(): JSX.Element {
-  const quests = useAppSelector(getQuests);
+type TQuestsListProps = {
+  quests: TQuests[];
+};
 
+function QuestsList({ quests }: TQuestsListProps): JSX.Element {
   return (
     <div className="cards-grid">
       {quests.map((quest) => (
