@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, DateRus, QuestLevelRus } from '../../const';
 import { TReservation } from '../../types/reservations';
 import { useAppDispatch } from '../../hooks';
 import { deleteReservation, fetchReservations } from '../../store/api-actions';
@@ -37,7 +37,7 @@ function ReservationCard({ reservation }: ReservationCardProps): JSX.Element {
             {reservation.quest.title}
           </Link>
           <span className="quest-card__info">
-            [{reservation.date},&nbsp;{reservation.time}.{' '}
+            [{DateRus[reservation.date]},&nbsp;{reservation.time}.{' '}
             {reservation.location.address}]
           </span>
         </div>
@@ -52,7 +52,7 @@ function ReservationCard({ reservation }: ReservationCardProps): JSX.Element {
             <svg width={14} height={14} aria-hidden="true">
               <use xlinkHref="#icon-level" />
             </svg>
-            {reservation.quest.level}
+            {QuestLevelRus[reservation.quest.level]}
           </li>
         </ul>
 

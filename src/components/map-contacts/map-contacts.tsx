@@ -1,37 +1,14 @@
-import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer, Tooltip } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { officeIconConfig } from '../../const';
 
-// function createIcon(config: IconConfig) {
-//   return new Icon({
-//     iconUrl: config.url,
-//     iconSize: [config.width, config.height],
-//     iconAnchor: [config.anchorX, config.anchorY],
-//   });
-// }
-
-const defaultIconConfig: IconConfig = {
-  url: '/img/content/svg/pin-default.svg',
-  width: 40,
-  height: 55,
-  anchorX: 14,
-  anchorY: 40,
-};
-
-const activeIconConfig: IconConfig = {
-  url: '/img/content/svg/pin-active.svg',
-  width: 40,
-  height: 55,
-  anchorX: 14,
-  anchorY: 40,
-};
-
-const officeLocation: [number, number] = [59.968, 30.317];
+const officeViewCoords: [number, number] = [59.968, 30.317];
 
 const icon = new Icon({
-  iconUrl: 'public/img/svg/pin-active.svg',
-  iconSize: [50, 50],
-  iconAnchor: [25, 50],
+  iconUrl: officeIconConfig.url,
+  iconSize: [officeIconConfig.width, officeIconConfig.height],
+  iconAnchor: [officeIconConfig.anchorX, officeIconConfig.anchorY],
 });
 
 function MapContacts(): JSX.Element {
@@ -40,7 +17,7 @@ function MapContacts(): JSX.Element {
       <div className="map">
         <MapContainer
           className="map container"
-          center={officeLocation}
+          center={officeViewCoords}
           zoom={16}
           scrollWheelZoom={false}
         >
@@ -49,9 +26,9 @@ function MapContacts(): JSX.Element {
             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
           />
           <Marker position={[59.9682, 30.3173]} icon={icon}>
-            <Popup>
+            <Tooltip>
               Санкт-Петербург, <br /> Набережная реки Карповка, д 5П.
-            </Popup>
+            </Tooltip>
           </Marker>
         </MapContainer>
       </div>

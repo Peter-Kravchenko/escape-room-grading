@@ -1,39 +1,29 @@
-import { MapContainer, Marker, Popup, TileLayer, Tooltip } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer, Tooltip } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { TQuestBookings } from '../../types/booking';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getSelectedLocation } from '../../store/quests-data/quests-data.selectors';
 import { setSelectedLocation } from '../../store/quests-data/quests-data.slice';
+import {
+  COPYRIGHT,
+  TITLE_LAYER,
+  activeIconConfig,
+  defaultIconConfig,
+} from '../../const';
 
-const defaultIconConfig: IconConfig = {
-  url: '/img/content/svg/pin-default.svg',
-  width: 40,
-  height: 55,
-  anchorX: 14,
-  anchorY: 40,
-};
-
-const activeIconConfig: IconConfig = {
-  url: '/img/content/svg/pin-active.svg',
-  width: 40,
-  height: 55,
-  anchorX: 14,
-  anchorY: 40,
-};
-
-const officeLocation: [number, number] = [59.93, 30.31];
+const questsViewCoords: [number, number] = [59.93, 30.31];
 
 const activeIcon = new Icon({
-  iconUrl: 'public/img/svg/pin-active.svg',
-  iconSize: [50, 50],
-  iconAnchor: [25, 50],
+  iconUrl: activeIconConfig.url,
+  iconSize: [activeIconConfig.width, activeIconConfig.height],
+  iconAnchor: [activeIconConfig.anchorX, activeIconConfig.anchorY],
 });
 
 const defaultIcon = new Icon({
-  iconUrl: 'public/img/svg/pin-default.svg',
-  iconSize: [50, 50],
-  iconAnchor: [25, 50],
+  iconUrl: defaultIconConfig.url,
+  iconSize: [defaultIconConfig.width, defaultIconConfig.height],
+  iconAnchor: [defaultIconConfig.anchorX, defaultIconConfig.anchorY],
 });
 
 type MapBookingProps = {
@@ -50,17 +40,14 @@ function MapBooking({ questLocations }: MapBookingProps): JSX.Element {
         <div className="map">
           <MapContainer
             className="map__container"
-            center={officeLocation}
+            center={questsViewCoords}
             zoom={10}
             scrollWheelZoom={false}
           >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-            />
+            <TileLayer attribution={COPYRIGHT} url={TITLE_LAYER} />
 
             {questLocations &&
-              questLocations.map((location) => (
+              questLocations.map((location: TQuestBookings['location']) => (
                 <Marker
                   key={location.id}
                   position={location.location.coords}

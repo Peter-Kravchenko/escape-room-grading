@@ -1,8 +1,8 @@
 import {
   QuestLevel,
-  QuestLevelsInRus,
+  QuestLevelRus,
   QuestType,
-  QuestTypesInRus,
+  QuestTypeRus,
 } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import {
@@ -55,7 +55,7 @@ function Filters({
                     />
                   </svg>
                   <span className="filter__label-text">
-                    {QuestTypesInRus[type]}
+                    {QuestTypeRus[type]}
                   </span>
                 </label>
               </li>
@@ -82,7 +82,7 @@ function Filters({
                 />
                 <label className="filter__label" htmlFor={level}>
                   <span className="filter__label-text">
-                    {QuestLevelsInRus[level]}
+                    {QuestLevelRus[level]}
                   </span>
                 </label>
               </li>

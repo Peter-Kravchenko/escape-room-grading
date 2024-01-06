@@ -1,3 +1,41 @@
+import { IconConfig } from './types/map';
+
+export const TITLE_LAYER =
+  'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+
+export const COPYRIGHT =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+
+//В ТЗ не сказано, как ограничивать описание квеста, если просто обрезать описание, получится не красиво.
+export enum DescriptionLength {
+  Min = 50,
+  Max = 300,
+}
+
+export const officeIconConfig: IconConfig = {
+  url: 'public/img/svg/pin-active.svg',
+  width: 50,
+  height: 50,
+  anchorX: 25,
+  anchorY: 50,
+};
+
+export const defaultIconConfig: IconConfig = {
+  url: 'public/img/svg/pin-default.svg',
+  width: 30,
+  height: 30,
+  anchorX: 15,
+  anchorY: 30,
+};
+
+export const activeIconConfig: IconConfig = {
+  url: 'public/img/svg/pin-active.svg',
+  width: 30,
+  height: 30,
+  anchorX: 15,
+  anchorY: 30,
+};
+
 export enum AppRoute {
   Booking = '/booking',
   Contacts = '/contacts',
@@ -36,6 +74,11 @@ export enum RequestStatus {
   Rejected = 'Rejected',
 }
 
+export enum Date {
+  Today = 'today',
+  Tomorrow = 'tomorrow',
+}
+
 export enum QuestLevel {
   All = 'all',
   Easy = 'easy',
@@ -52,14 +95,19 @@ export enum QuestType {
   SciFi = 'sci-fi',
 }
 
-export const QuestLevelsInRus: Record<QuestLevel, string> = {
+export const DateRus: Record<Date, string> = {
+  [Date.Today]: 'сегодня',
+  [Date.Tomorrow]: 'завтра',
+};
+
+export const QuestLevelRus: Record<QuestLevel, string> = {
   [QuestLevel.All]: 'Все',
   [QuestLevel.Easy]: 'Легкий',
   [QuestLevel.Medium]: 'Средний',
   [QuestLevel.Hard]: 'Сложный',
 };
 
-export const QuestTypesInRus: Record<QuestType, string> = {
+export const QuestTypeRus: Record<QuestType, string> = {
   [QuestType.All]: 'Все',
   [QuestType.Adventures]: 'Приключения',
   [QuestType.Horror]: 'Ужасы',
@@ -67,14 +115,3 @@ export const QuestTypesInRus: Record<QuestType, string> = {
   [QuestType.Detective]: 'Детектив',
   [QuestType.SciFi]: 'Sci-Fi',
 };
-
-export enum Date {
-  Today = 'today',
-  Tomorrow = 'tomorrow',
-}
-
-export const TITLE_LAYER =
-  'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
-
-export const COPYRIGHT =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
