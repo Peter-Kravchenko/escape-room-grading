@@ -12,7 +12,11 @@ const initialState: TReservationData = {
 export const reservationData = createSlice({
   name: NameSpace.Quests,
   initialState,
-  reducers: {},
+  reducers: {
+    resetDeleteReservationStatus: (state) => {
+      state.deleteReservationStatus = RequestStatus.Idle;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchReservations.pending, (state) => {
@@ -36,3 +40,5 @@ export const reservationData = createSlice({
       });
   },
 });
+
+export const { resetDeleteReservationStatus } = reservationData.actions;

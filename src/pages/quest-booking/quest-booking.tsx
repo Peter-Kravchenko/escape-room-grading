@@ -1,11 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import {
-  fetchQuest,
-  fetchQuestBookings,
-  fetchReservations,
-} from '../../store/api-actions';
+import { fetchQuest, fetchQuestBookings } from '../../store/api-actions';
 import {
   getQuest,
   getQuestBookings,
@@ -27,7 +23,6 @@ function QuestBooking(): JSX.Element {
     if (id) {
       dispatch(fetchQuest(id));
       dispatch(fetchQuestBookings(id));
-      dispatch(fetchReservations());
     }
   }, [dispatch, id]);
 
