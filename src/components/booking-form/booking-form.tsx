@@ -220,7 +220,7 @@ function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
           disabled={isSending}
           {...register('agreement', {
             required:
-              'Пожалуйста, ознакомьтесь с правилами обработки персональных данных и пользовательским соглашением',
+              'Для продолжения необходимо дать согласие с правилами обработки персональных данных и пользовательским соглашением',
           })}
         />
         <span className="custom-checkbox__icon">
@@ -235,12 +235,12 @@ function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
           </a>
           &nbsp;и пользовательским соглашением
         </span>
-        {errors.agreement && (
-          <p className="error" style={{ color: 'red', fontSize: '18px' }}>
-            {errors.agreement?.message}
-          </p>
-        )}
       </label>
+      {errors.agreement && (
+        <p className="error" style={{ color: 'red', fontSize: '18px' }}>
+          {errors.agreement?.message}
+        </p>
+      )}
     </form>
   );
 }

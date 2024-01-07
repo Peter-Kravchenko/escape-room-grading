@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react';
-import { RequestStatus } from '../../const';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getLoginStatus } from '../../store/user-data/user-data.selectors';
-import { TAuthData } from '../../types/user';
+import {
+  getAuthorizationStatus,
+  getLoginStatus,
+} from '../../store/user-data/user-data.selectors';
+import { TAuthData, TLoginFormValues } from '../../types/user';
 import { login } from '../../store/api-actions';
-import { toast } from 'react-toastify';
+import { AuthorizationStatus, RequestStatus } from '../../const';
 import { resetLoginStatus } from '../../store/user-data/user-data.slice';
 
 const EMAIL_INVALID_MESSAGE =
@@ -13,53 +17,37 @@ const PASSWORD_INVALID_MESSAGE = 'Пароль должен содержать �
 
 const emailPattern =
   /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
-const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.{1,}$)/;
+const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.{3,15}$)/;
 
 function Login(): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const loginSendingStatus = useAppSelector(getLoginStatus);
-
-  const isUIBlocked = loginSendingStatus === RequestStatus.Pending;
-
-  const [formData, setFormData] = useState<TAuthData>({
-    email: '',
-    password: '',
-  });
-  const [isValid, setIsValid] = useState({ email: true, password: true });
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const handleFormChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleFormSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!emailPattern.test(formData.email)) {
-      setErrorMessage(EMAIL_INVALID_MESSAGE);
-      setIsValid({ email: false, password: true });
-    } else if (!passwordPattern.test(formData.password)) {
-      setErrorMessage(PASSWORD_INVALID_MESSAGE);
-      setIsValid({ email: true, password: false });
-    } else {
-      dispatch(login({ email: formData.email, password: formData.password }));
-    }
-  };
+  const isSending = loginSendingStatus === RequestStatus.Pending;
 
   useEffect(() => {
-    if (loginSendingStatus === RequestStatus.Success) {
-      setFormData({
-        email: '',
-        password: '',
-      });
+    if (authorizationStatus === AuthorizationStatus.Auth) {
+      navigate(-1);
     }
-    if (loginSendingStatus === RequestStatus.Rejected) {
-      toast.error('Произошла ошибка при попытке входа, попробуйте еще раз');
-    }
+  }, [authorizationStatus, navigate]);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<TLoginFormValues>({
+    mode: 'onBlur',
+  });
+
+  const onFormSubmit: SubmitHandler<TLoginFormValues> = (
+    formData: TAuthData
+  ) => {
+    dispatch(login({ email: formData.email, password: formData.password }));
+    reset();
     dispatch(resetLoginStatus());
-  }, [loginSendingStatus, dispatch]);
+  };
 
   return (
     <main className="decorated-page login">
@@ -81,10 +69,10 @@ function Login(): JSX.Element {
       <div className="container container--size-l">
         <div className="login__form">
           <form
+            onSubmit={handleSubmit(onFormSubmit)}
             className="login-form"
             action="https://echo.htmlacademy.ru/"
             method="post"
-            onSubmit={handleFormSubmit}
             noValidate
           >
             <div className="login-form__inner-wrapper">
@@ -93,16 +81,23 @@ function Login(): JSX.Element {
                 <div className="custom-input login-form__input">
                   <label className="custom-input__label" htmlFor="email">
                     E&nbsp;–&nbsp;mail
+                    {errors.email && (
+                      <p className="error" style={{ color: 'red' }}>
+                        {errors.email?.message}
+                      </p>
+                    )}
                   </label>
                   <input
-                    onChange={handleFormChange}
-                    value={formData.email}
                     type="email"
                     id="email"
-                    name="email"
                     placeholder="Адрес электронной почты"
-                    required
-                    disabled={isUIBlocked}
+                    disabled={isSending}
+                    {...register('email', {
+                      pattern: {
+                        value: emailPattern,
+                        message: EMAIL_INVALID_MESSAGE,
+                      },
+                    })}
                   />
                 </div>
                 <div className="custom-input login-form__input">
@@ -110,32 +105,49 @@ function Login(): JSX.Element {
                     Пароль
                   </label>
                   <input
-                    onChange={handleFormChange}
-                    value={formData.password}
                     type="password"
                     id="password"
-                    name="password"
                     placeholder="Пароль"
-                    required
-                    disabled={isUIBlocked}
+                    disabled={isSending}
+                    {...register('password', {
+                      minLength: {
+                        value: 3,
+                        message: 'Минимальная длина 3 символа',
+                      },
+                      maxLength: {
+                        value: 15,
+                        message: 'Максимальная длина 15 символов',
+                      },
+                      pattern: {
+                        value: passwordPattern,
+                        message: PASSWORD_INVALID_MESSAGE,
+                      },
+                    })}
                   />
+                  {errors.password && (
+                    <p className="error" style={{ color: 'red' }}>
+                      {errors.password?.message}
+                    </p>
+                  )}
                 </div>
               </div>
               <button
                 className="btn btn--accent btn--general login-form__submit"
                 type="submit"
-                disabled={isUIBlocked}
+                disabled={isSending || !isValid}
               >
-                {isUIBlocked ? 'Входим...' : 'Войти'}
+                {isSending ? 'Входим...' : 'Войти'}
               </button>
             </div>
             <label className="custom-checkbox login-form__checkbox">
               <input
                 type="checkbox"
                 id="id-order-agreement"
-                name="user-agreement"
-                required
-                disabled={isUIBlocked}
+                disabled={isSending}
+                {...register('agreement', {
+                  required:
+                    'Для продолжения необходимо дать согласие с правилами обработки персональных данных и пользовательским соглашением',
+                })}
               />
               <span className="custom-checkbox__icon">
                 <svg width={20} height={17} aria-hidden="true">
@@ -153,6 +165,11 @@ function Login(): JSX.Element {
                 &nbsp;и пользовательским соглашением
               </span>
             </label>
+            {errors.agreement && (
+              <p className="error" style={{ color: 'red' }}>
+                {errors.agreement?.message}
+              </p>
+            )}
           </form>
         </div>
       </div>

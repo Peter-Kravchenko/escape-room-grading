@@ -16,17 +16,13 @@ function Main(): JSX.Element {
 
   let filteredQuests = quests;
 
-  if (activeQuestType === QuestType.All) {
-    filteredQuests = quests;
-  } else {
+  if (activeQuestType !== QuestType.All) {
     filteredQuests = filteredQuests.filter(
       (quest) => quest.type === activeQuestType
     );
   }
 
-  if (activeQuestLevel === QuestLevel.All) {
-    filteredQuests = quests;
-  } else {
+  if (activeQuestLevel !== QuestLevel.All) {
     filteredQuests = filteredQuests.filter(
       (quest) => quest.level === activeQuestLevel
     );
@@ -48,7 +44,11 @@ function Main(): JSX.Element {
           activeQuestLevel={activeQuestLevel}
         />
         <h2 className="title visually-hidden">Выберите квест</h2>
-        <QuestsList quests={filteredQuests} />
+        {filteredQuests.length === 0 ? (
+          <h1 className="title">Квесты по указанным фильтрам не найдены</h1>
+        ) : (
+          <QuestsList quests={filteredQuests} />
+        )}
       </div>
     </main>
   );
