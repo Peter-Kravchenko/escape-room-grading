@@ -26,8 +26,5 @@ export const appProcess = createSlice({
   },
 });
 
-export const {
-  setActiveQuestType,
-  setActiveQuestLevel,
-  resetFilters: resetApp,
-} = appProcess.actions;
+export const { setActiveQuestType, setActiveQuestLevel, resetFilters } =
+  appProcess.actions;

@@ -1,16 +1,28 @@
 import { useEffect } from 'react';
 import ReservationCard from '../../components/reservation-card/reservation-card';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getReservations } from '../../store/reservation-data/reservation-data.selectors';
+import {
+  getReservationFetchingStatus,
+  getReservations,
+} from '../../store/reservation-data/reservation-data.selectors';
 import { fetchReservations } from '../../store/api-actions';
+import { RequestStatus } from '../../const';
+import Loader from '../../components/loader/loader';
 
 function Reservation(): JSX.Element {
   const dispatch = useAppDispatch();
   const userReservations = useAppSelector(getReservations);
+  const userReservationsFetchingStatus = useAppSelector(
+    getReservationFetchingStatus
+  );
 
   useEffect(() => {
     dispatch(fetchReservations());
   }, [dispatch]);
+
+  if (userReservationsFetchingStatus === RequestStatus.Pending) {
+    return <Loader />;
+  }
 
   return (
     <main className="page-content decorated-page">

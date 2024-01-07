@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
 import Filters from '../../components/filters/filters';
 import Loader from '../../components/loader/loader';
 import QuestsList from '../../components/quests-list/quests-list';
 import { QuestLevel, QuestType, RequestStatus } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   getActiveQuestLevel,
   getActiveQuestType,
@@ -11,8 +12,11 @@ import {
   getQuests,
   getQuestsFetchingStatus,
 } from '../../store/quests-data/quests-data.selectors';
+import { resetFilters } from '../../store/app-process/app-process.slice';
 
 function Main(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const quests = useAppSelector(getQuests);
   const questsFetchingStatus = useAppSelector(getQuestsFetchingStatus);
 
@@ -32,6 +36,10 @@ function Main(): JSX.Element {
       (quest) => quest.level === activeQuestLevel
     );
   }
+
+  useEffect(() => {
+    dispatch(resetFilters());
+  }, [dispatch]);
 
   if (questsFetchingStatus === RequestStatus.Pending) {
     return <Loader />;
