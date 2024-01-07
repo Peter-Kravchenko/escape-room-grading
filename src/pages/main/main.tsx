@@ -1,15 +1,20 @@
 import Filters from '../../components/filters/filters';
+import Loader from '../../components/loader/loader';
 import QuestsList from '../../components/quests-list/quests-list';
-import { QuestLevel, QuestType } from '../../const';
+import { QuestLevel, QuestType, RequestStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
 import {
   getActiveQuestLevel,
   getActiveQuestType,
 } from '../../store/app-process/app-process.selectors';
-import { getQuests } from '../../store/quests-data/quests-data.selectors';
+import {
+  getQuests,
+  getQuestsFetchingStatus,
+} from '../../store/quests-data/quests-data.selectors';
 
 function Main(): JSX.Element {
   const quests = useAppSelector(getQuests);
+  const questsFetchingStatus = useAppSelector(getQuestsFetchingStatus);
 
   const activeQuestType = useAppSelector(getActiveQuestType);
   const activeQuestLevel = useAppSelector(getActiveQuestLevel);
@@ -26,6 +31,10 @@ function Main(): JSX.Element {
     filteredQuests = filteredQuests.filter(
       (quest) => quest.level === activeQuestLevel
     );
+  }
+
+  if (questsFetchingStatus === RequestStatus.Pending) {
+    return <Loader />;
   }
 
   return (

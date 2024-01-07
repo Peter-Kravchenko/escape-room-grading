@@ -1,13 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-data/user-data.selectors';
 import { logout } from '../../store/api-actions';
-
-//todo добавить cn link-active для кнопок
+import cn from 'classnames';
 
 function Header(): JSX.Element {
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const isAuth =
     useAppSelector(getAuthorizationStatus) === AuthorizationStatus.Auth;
 
@@ -23,23 +23,32 @@ function Header(): JSX.Element {
           <ul className="main-nav__list">
             <li className="main-nav__item">
               <Link
+                className={cn('link', {
+                  active: location.pathname === AppRoute.Main,
+                })}
                 to={AppRoute.Main}
-                onClick={(e) => {
-                  // добавить класс link-active
-                }}
-                className="link"
               >
                 Квесты
               </Link>
             </li>
             <li className="main-nav__item">
-              <Link to={AppRoute.Contacts} className="link">
+              <Link
+                className={cn('link', {
+                  active: location.pathname === AppRoute.Contacts,
+                })}
+                to={AppRoute.Contacts}
+              >
                 Контакты
               </Link>
             </li>
             {isAuth && (
               <li className="main-nav__item">
-                <Link to={AppRoute.Reservation} className="link">
+                <Link
+                  className={cn('link', {
+                    active: location.pathname === AppRoute.Reservation,
+                  })}
+                  to={AppRoute.Reservation}
+                >
                   Мои бронирования
                 </Link>
               </li>

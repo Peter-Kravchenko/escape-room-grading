@@ -12,13 +12,14 @@ import PageNotFound from '../../pages/page-not-found/page-not-found';
 import PrivateRoute from '../private-route/private-route';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-data/user-data.selectors';
+import Loader from '../loader/loader';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
   const authStatus = useAppSelector(getAuthorizationStatus);
 
   if (authStatus === AuthorizationStatus.Unknown) {
-    return <h2>Loading...</h2>;
+    return <Loader />;
   }
 
   return (
