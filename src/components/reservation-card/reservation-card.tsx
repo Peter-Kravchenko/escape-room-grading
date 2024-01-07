@@ -1,16 +1,13 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, DateRus, QuestLevelRus } from '../../const';
 import { TReservation } from '../../types/reservations';
-import { useAppDispatch } from '../../hooks';
-import { deleteReservation, fetchReservations } from '../../store/api-actions';
+import DeleteReservationButton from '../delete-reservarion-button/delete-reservation-button';
 
 type ReservationCardProps = {
   reservation: TReservation;
 };
 
 function ReservationCard({ reservation }: ReservationCardProps): JSX.Element {
-  const dispatch = useAppDispatch();
-
   return (
     <div className="quest-card">
       <div className="quest-card__img">
@@ -55,17 +52,7 @@ function ReservationCard({ reservation }: ReservationCardProps): JSX.Element {
             {QuestLevelRus[reservation.quest.level]}
           </li>
         </ul>
-
-        <button
-          className="btn btn--accent btn--secondary quest-card__btn"
-          type="button"
-          onClick={() => {
-            dispatch(deleteReservation(reservation.id));
-            dispatch(fetchReservations());
-          }}
-        >
-          Отменить
-        </button>
+        <DeleteReservationButton id={reservation.id} />
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ export type TQuestBookings = {
   }[];
 };
 
-export type TBookingInfo = {
+export type TBookingPlaces = {
   date: Date;
   time: string;
   contactPerson: string;

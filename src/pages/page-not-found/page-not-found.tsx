@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import Footer from '../../components/footer/footer';
 import { AppRoute } from '../../const';
 
 function PageNotFound(): JSX.Element {

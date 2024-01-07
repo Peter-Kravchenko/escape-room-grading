@@ -3,7 +3,7 @@ import { TAppDispatch, TAppState } from '../types/state';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TQuest, TQuests } from '../types/quest';
 import { APIRoute, NameSpace } from '../const';
-import { TBookingInfo, TQuestBookings } from '../types/booking';
+import { TBookingPlaces, TQuestBookings } from '../types/booking';
 import { TReservation, TReservations } from '../types/reservations';
 import { TAuthData, TUser } from '../types/user';
 import { dropToken, saveToken } from '../services/token';
@@ -43,12 +43,12 @@ export const fetchQuestBookings = createAsyncThunk<
 
 export const addToBooking = createAsyncThunk<
   void,
-  { currentData: TBookingInfo; questId: TQuestBookings['id'] },
+  { currentData: TBookingPlaces; questId: TQuestBookings['id'] },
   TExtra
 >(
   `${NameSpace.Quests}/questBooking`,
   async ({ currentData, questId }, { extra: api }) => {
-    await api.post<TBookingInfo>(
+    await api.post<TBookingPlaces>(
       `${APIRoute.Quest}/${questId}/booking`,
       currentData
     );

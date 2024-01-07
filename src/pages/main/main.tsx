@@ -61,10 +61,12 @@ function Main(): JSX.Element {
           activeQuestLevel={activeQuestLevel}
         />
         <h2 className="title visually-hidden">Выберите квест</h2>
-        {filteredQuests.length === 0 ? (
-          <h1 className="title">Квесты по указанным фильтрам не найдены</h1>
-        ) : (
+        {filteredQuests.length ? (
           <QuestsList quests={filteredQuests} />
+        ) : (
+          <div className="title--size-s">
+            Квесты по указанным фильтрам не найдены
+          </div>
         )}
       </div>
     </main>

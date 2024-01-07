@@ -5,7 +5,7 @@ import Main from '../../pages/main/main';
 import QuestDetails from '../../pages/quest-details/quest-datails';
 import Login from '../../pages/login/login';
 import QuestBooking from '../../pages/quest-booking/quest-booking';
-import Reservation from '../../pages/reservation/reservation';
+import MyReservations from '../../pages/my-reservations/my-reservations';
 import Contacts from '../../pages/contacts/contacts';
 import Layout from '../layout/layout';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
@@ -40,7 +40,7 @@ function App(): JSX.Element {
             path={AppRoute.Reservation}
             element={
               <PrivateRoute authorizationStatus={authStatus}>
-                <Reservation />
+                <MyReservations />
               </PrivateRoute>
             }
           />

@@ -1,6 +1,6 @@
 import { AuthorizationStatus, RequestStatus } from '../const';
 import { store } from '../store';
-import { TBookingInfo, TQuestBookings } from './booking';
+import { TBookingPlaces, TQuestBookings } from './booking';
 import { TQuest, TQuests } from './quest';
 import { TReservations } from './reservations';
 import { TUser } from './user';
@@ -21,7 +21,7 @@ export type TQuestsData = {
   quests: TQuests[];
   questBookings: TQuestBookings | null;
   selectedLocatoin: TQuestBookings | null;
-  bookingInfo: TBookingInfo | null;
+  bookingInfo: TBookingPlaces | null;
   questFetchingStatus: RequestStatus;
   questsFetchingStatus: RequestStatus;
   questBookingsFetchingStatus: RequestStatus;
@@ -31,6 +31,7 @@ export type TQuestsData = {
 export type TReservationData = {
   reservations: TReservations;
   reservationFetchingStatus: RequestStatus;
+  deleteReservationStatus: RequestStatus;
 };
 
 export type TUserData = {

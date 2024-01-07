@@ -6,6 +6,7 @@ import { TReservationData } from '../../types/state';
 const initialState: TReservationData = {
   reservations: [],
   reservationFetchingStatus: RequestStatus.Idle,
+  deleteReservationStatus: RequestStatus.Idle,
 };
 
 export const reservationData = createSlice({
@@ -25,16 +26,13 @@ export const reservationData = createSlice({
         state.reservationFetchingStatus = RequestStatus.Rejected;
       })
       .addCase(deleteReservation.pending, (state) => {
-        state.reservationFetchingStatus = RequestStatus.Pending;
+        state.deleteReservationStatus = RequestStatus.Pending;
       })
-      .addCase(deleteReservation.fulfilled, (state, action) => {
-        state.reservationFetchingStatus = RequestStatus.Success;
-        state.reservations = state.reservations.filter(
-          (reservation) => reservation.id !== action.payload
-        );
+      .addCase(deleteReservation.fulfilled, (state) => {
+        state.deleteReservationStatus = RequestStatus.Success;
       })
       .addCase(deleteReservation.rejected, (state) => {
-        state.reservationFetchingStatus = RequestStatus.Rejected;
+        state.deleteReservationStatus = RequestStatus.Rejected;
       });
   },
 });

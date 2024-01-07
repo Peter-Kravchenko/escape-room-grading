@@ -45,9 +45,9 @@ function Login(): JSX.Element {
     formData: TAuthData
   ) => {
     dispatch(login({ email: formData.email, password: formData.password }));
+    dispatch(resetLoginStatus());
     dispatch(checkAuth());
     reset();
-    //dispatch(resetLoginStatus());
   };
 
   return (

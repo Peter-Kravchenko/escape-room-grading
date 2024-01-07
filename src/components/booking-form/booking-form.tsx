@@ -4,12 +4,14 @@ import {
   getAddToBookingFetchingStatus,
   getSelectedLocation,
 } from '../../store/quests-data/quests-data.selectors';
-import { TBookingFormValues, TBookingInfo, TSlot } from '../../types/booking';
+import { TBookingFormValues, TBookingPlaces, TSlot } from '../../types/booking';
 import { addToBooking } from '../../store/api-actions';
 import { AppRoute, RequestStatus } from '../../const';
 import { TQuest } from '../../types/quest';
 import { useNavigate } from 'react-router-dom';
 import { resetAddToBookingFetchingStatus } from '../../store/quests-data/quests-data.slice';
+import { useEffect } from 'react';
+import { getDate, getTime } from '../../utils/utils';
 
 type BookingFormProps = {
   peopleCount: TQuest['peopleMinMax'];
@@ -26,29 +28,32 @@ function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
   const {
     register,
     handleSubmit,
+    resetField,
     reset,
     formState: { errors, isValid },
   } = useForm<TBookingFormValues>({ mode: 'onBlur' });
 
   const onFormSubmit: SubmitHandler<TBookingFormValues> = (formData) => {
-    console.log(formData);
-    const { date, name, tel, person, children } =
-      formData as TBookingFormValues;
+    const { date, name, tel, person, children } = formData;
 
     const currentData = {
-      date: date.slice(0, -5),
-      time: date.slice(-5),
+      date: getDate(date),
+      time: getTime(date),
       contactPerson: name,
       phone: tel,
       withChildren: Boolean(children),
       peopleCount: Number(person),
       placeId: selectedLocation?.id,
-    } as TBookingInfo;
+    } as TBookingPlaces;
     dispatch(addToBooking({ currentData, questId }));
     dispatch(resetAddToBookingFetchingStatus());
     navigate(AppRoute.Reservation);
     reset();
   };
+
+  useEffect(() => {
+    resetField('date');
+  }, [selectedLocation, resetField]);
 
   return (
     <form
@@ -104,7 +109,7 @@ function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
             ))}
           </div>
           {errors.date && (
-            <p className="error" style={{ color: 'red', fontSize: '18px' }}>
+            <p className="error" style={{ color: 'red' }}>
               {errors.date?.message}
             </p>
           )}
@@ -130,7 +135,7 @@ function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
             })}
           />
           {errors.name && (
-            <p className="error" style={{ color: 'red', fontSize: '18px' }}>
+            <p className="error" style={{ color: 'red' }}>
               {errors.name?.message}
             </p>
           )}
@@ -154,7 +159,7 @@ function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
             })}
           />
           {errors.tel && (
-            <p className="error" style={{ color: 'red', fontSize: '18px' }}>
+            <p className="error" style={{ color: 'red' }}>
               {errors.tel?.message}
             </p>
           )}
@@ -164,7 +169,6 @@ function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
             Количество участников
           </label>
           <input
-            type="number"
             id="person"
             placeholder={`Количество участников от ${peopleCount[0]} до ${peopleCount[1]}`}
             disabled={isSending}
@@ -181,7 +185,7 @@ function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
             })}
           />
           {errors.person && (
-            <p className="error" style={{ color: 'red', fontSize: '18px' }}>
+            <p className="error" style={{ color: 'red' }}>
               {errors.person?.message}
             </p>
           )}
@@ -234,7 +238,7 @@ function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
         </span>
       </label>
       {errors.agreement && (
-        <p className="error" style={{ color: 'red', fontSize: '18px' }}>
+        <p className="error" style={{ color: 'red' }}>
           {errors.agreement?.message}
         </p>
       )}
