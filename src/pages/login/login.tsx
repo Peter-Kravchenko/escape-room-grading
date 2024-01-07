@@ -7,7 +7,7 @@ import {
   getLoginStatus,
 } from '../../store/user-data/user-data.selectors';
 import { TAuthData, TLoginFormValues } from '../../types/user';
-import { login } from '../../store/api-actions';
+import { checkAuth, login } from '../../store/api-actions';
 import { AuthorizationStatus, RequestStatus } from '../../const';
 import { resetLoginStatus } from '../../store/user-data/user-data.slice';
 
@@ -30,7 +30,7 @@ function Login(): JSX.Element {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       navigate(-1);
     }
-  }, [authorizationStatus, navigate]);
+  }, [authorizationStatus, dispatch, navigate]);
 
   const {
     register,
@@ -45,8 +45,9 @@ function Login(): JSX.Element {
     formData: TAuthData
   ) => {
     dispatch(login({ email: formData.email, password: formData.password }));
+    dispatch(checkAuth());
     reset();
-    dispatch(resetLoginStatus());
+    //dispatch(resetLoginStatus());
   };
 
   return (

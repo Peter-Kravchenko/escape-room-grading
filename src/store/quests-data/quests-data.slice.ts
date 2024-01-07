@@ -28,6 +28,9 @@ export const questsData = createSlice({
     setSelectedLocation: (state, action: PayloadAction<TQuestBookings>) => {
       state.selectedLocatoin = action.payload;
     },
+    resetAddToBookingFetchingStatus: (state) => {
+      state.addToBookingFetchingStatus = RequestStatus.Idle;
+    },
   },
   extraReducers(builder) {
     builder
@@ -75,4 +78,5 @@ export const questsData = createSlice({
   },
 });
 
-export const { setSelectedLocation } = questsData.actions;
+export const { setSelectedLocation, resetAddToBookingFetchingStatus } =
+  questsData.actions;

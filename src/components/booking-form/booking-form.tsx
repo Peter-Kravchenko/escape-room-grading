@@ -1,13 +1,15 @@
-import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   getAddToBookingFetchingStatus,
   getSelectedLocation,
 } from '../../store/quests-data/quests-data.selectors';
 import { TBookingFormValues, TBookingInfo, TSlot } from '../../types/booking';
-import { addToBooking, fetchReservations } from '../../store/api-actions';
-import { RequestStatus } from '../../const';
+import { addToBooking } from '../../store/api-actions';
+import { AppRoute, RequestStatus } from '../../const';
 import { TQuest } from '../../types/quest';
+import { useNavigate } from 'react-router-dom';
+import { resetAddToBookingFetchingStatus } from '../../store/quests-data/quests-data.slice';
 
 type BookingFormProps = {
   peopleCount: TQuest['peopleMinMax'];
@@ -16,6 +18,7 @@ type BookingFormProps = {
 
 function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const selectedLocation = useAppSelector(getSelectedLocation);
   const formSendingStatus = useAppSelector(getAddToBookingFetchingStatus);
   const isSending = formSendingStatus === RequestStatus.Pending;
@@ -41,17 +44,11 @@ function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
       peopleCount: Number(person),
       placeId: selectedLocation?.id,
     } as TBookingInfo;
-
-    console.log(currentData);
-
     dispatch(addToBooking({ currentData, questId }));
-
-    //reset();
+    dispatch(resetAddToBookingFetchingStatus());
+    navigate(AppRoute.Reservation);
+    reset();
   };
-
-  // console.log(register('date'));
-  // console.log(isValid);
-  console.log(errors);
 
   return (
     <form

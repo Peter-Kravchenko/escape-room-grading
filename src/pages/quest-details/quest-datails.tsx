@@ -9,7 +9,6 @@ import {
 import { AppRoute, QuestLevelRus, RequestStatus } from '../../const';
 import BookButton from '../../components/book-button/book-button';
 import { TQuest } from '../../types/quest';
-import { limitDescriptionLength } from '../../utils/utils';
 
 function QuestDetails(): JSX.Element {
   const dispatch = useAppDispatch();
