@@ -35,7 +35,7 @@ function Filters({
                   name="type"
                   id={type}
                   checked={activeQuestType === type}
-                  onClick={() => {
+                  onChange={() => {
                     dispatch(
                       setActiveQuestType(type === activeQuestType ? null : type)
                     );
@@ -72,7 +72,7 @@ function Filters({
                   name="level"
                   id={level}
                   checked={activeQuestLevel === level}
-                  onClick={() => {
+                  onChange={() => {
                     dispatch(
                       setActiveQuestLevel(
                         level === activeQuestLevel ? null : level

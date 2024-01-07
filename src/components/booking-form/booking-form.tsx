@@ -57,7 +57,9 @@ function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
 
   return (
     <form
-      onSubmit={handleSubmit(onFormSubmit)}
+      onSubmit={(e) => {
+        handleSubmit(onFormSubmit)(e);
+      }}
       className="booking-form"
       action="https://echo.htmlacademy.ru/"
       method="post"

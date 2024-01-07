@@ -20,10 +20,7 @@ function MyReservations(): JSX.Element {
     dispatch(fetchReservations());
   }, [dispatch]);
 
-  if (
-    userReservationsFetchingStatus === RequestStatus.Pending ||
-    !userReservations
-  ) {
+  if (userReservationsFetchingStatus === RequestStatus.Pending) {
     return <Loader />;
   }
 

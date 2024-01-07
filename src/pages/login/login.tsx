@@ -48,6 +48,7 @@ function Login(): JSX.Element {
     dispatch(resetLoginStatus());
     dispatch(checkAuth());
     reset();
+    navigate(-1);
   };
 
   return (
@@ -70,7 +71,9 @@ function Login(): JSX.Element {
       <div className="container container--size-l">
         <div className="login__form">
           <form
-            onSubmit={handleSubmit(onFormSubmit)}
+            onSubmit={(e) => {
+              handleSubmit(onFormSubmit)(e);
+            }}
             className="login-form"
             action="https://echo.htmlacademy.ru/"
             method="post"
