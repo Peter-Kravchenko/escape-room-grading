@@ -154,9 +154,8 @@ function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
             {...register('tel', {
               required: 'Укажите телефонный номер',
               pattern: {
-                value:
-                  /^(\+[7]|[8])?((\d{2,3}) ?\d|\d)(([ -]?\d)|( ?(\d{2,3}) ?)){8,12}\d$/,
-                message: 'Пожалуйста, введите номер в формате +79999999999',
+                value: /^((\+7))(\(\d{3}\))(\d{3}-)(\d{2}-)(\d{2})$/,
+                message: 'Пожалуйста, введите номер в формате +7(999)999-99-99',
               },
             })}
           />

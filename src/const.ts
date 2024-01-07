@@ -1,16 +1,12 @@
 import { IconConfig } from './types/map';
 
-export const TITLE_LAYER =
-  'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+export const DESCRIPTION_LENGTH = 300;
+
+export const TILE_LAYER =
+  'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png';
 
 export const COPYRIGHT =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
-
-//В ТЗ не сказано, как ограничивать описание квеста, если просто обрезать описание, получится не красиво.
-export enum DescriptionLength {
-  Min = 50,
-  Max = 300,
-}
+  '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 export const officeIconConfig: IconConfig = {
   url: 'public/img/svg/pin-active.svg',
@@ -98,14 +94,14 @@ export enum QuestType {
 export const DateRus: Record<Date, string> = {
   [Date.Today]: 'сегодня',
   [Date.Tomorrow]: 'завтра',
-};
+} as const;
 
 export const QuestLevelRus: Record<QuestLevel, string> = {
   [QuestLevel.All]: 'Все',
   [QuestLevel.Easy]: 'Легкий',
   [QuestLevel.Medium]: 'Средний',
   [QuestLevel.Hard]: 'Сложный',
-};
+} as const;
 
 export const QuestTypeRus: Record<QuestType, string> = {
   [QuestType.All]: 'Все',
@@ -114,4 +110,4 @@ export const QuestTypeRus: Record<QuestType, string> = {
   [QuestType.Mystic]: 'Мистика',
   [QuestType.Detective]: 'Детектив',
   [QuestType.SciFi]: 'Sci-Fi',
-};
+} as const;

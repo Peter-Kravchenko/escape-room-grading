@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute, DateRus, QuestLevelRus } from '../../const';
 import { TReservation } from '../../types/reservations';
 import DeleteReservationButton from '../delete-reservarion-button/delete-reservation-button';
+import { getAdressWrap } from '../../utils/utils';
 
 type ReservationCardProps = {
   reservation: TReservation;
@@ -35,7 +36,8 @@ function ReservationCard({ reservation }: ReservationCardProps): JSX.Element {
           </Link>
           <span className="quest-card__info">
             [{DateRus[reservation.date]},&nbsp;{reservation.time}.{' '}
-            {reservation.location.address}]
+            {getAdressWrap(reservation.location.address).start} <br />{' '}
+            {getAdressWrap(reservation.location.address).end} ]
           </span>
         </div>
         <ul className="tags quest-card__tags">

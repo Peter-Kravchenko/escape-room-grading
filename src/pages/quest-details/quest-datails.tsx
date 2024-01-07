@@ -6,9 +6,15 @@ import {
   getQuest,
   getQuestFetchingStatus,
 } from '../../store/quests-data/quests-data.selectors';
-import { AppRoute, QuestLevelRus, RequestStatus } from '../../const';
+import {
+  AppRoute,
+  QuestLevelRus,
+  QuestTypeRus,
+  RequestStatus,
+} from '../../const';
 import { TQuest } from '../../types/quest';
 import Loader from '../../components/loader/loader';
+import { limitDescriptionLength } from '../../utils/utils';
 
 function QuestDetails(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -51,7 +57,7 @@ function QuestDetails(): JSX.Element {
           </h1>
           <p className="subtitle quest-page__subtitle">
             <span className="visually-hidden">Жанр:</span>
-            {quest?.type}
+            {QuestTypeRus[quest?.type]}
           </p>
           <ul className="tags tags--size-l quest-page__tags">
             <li className="tags__item">
@@ -68,7 +74,9 @@ function QuestDetails(): JSX.Element {
               {QuestLevelRus[quest?.level]}
             </li>
           </ul>
-          <p className="quest-page__description">{quest.description}</p>
+          <p className="quest-page__description">
+            {limitDescriptionLength(quest.description)}
+          </p>
           <Link
             to={`${AppRoute.Quest}/${quest?.id}/booking`}
             className="btn btn--accent btn--cta quest-page__btn"

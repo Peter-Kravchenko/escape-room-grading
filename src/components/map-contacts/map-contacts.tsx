@@ -1,9 +1,11 @@
 import { MapContainer, Marker, TileLayer, Tooltip } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { officeIconConfig } from '../../const';
+import { COPYRIGHT, TILE_LAYER, officeIconConfig } from '../../const';
 
+const OFFICE_VIEW_ZOOM = 16;
 const officeViewCoords: [number, number] = [59.968, 30.317];
+const markerPositionCoords: [number, number] = [59.9682, 30.3173];
 
 const icon = new Icon({
   iconUrl: officeIconConfig.url,
@@ -18,14 +20,11 @@ function MapContacts(): JSX.Element {
         <MapContainer
           className="map container"
           center={officeViewCoords}
-          zoom={16}
+          zoom={OFFICE_VIEW_ZOOM}
           scrollWheelZoom={false}
         >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-          />
-          <Marker position={[59.9682, 30.3173]} icon={icon}>
+          <TileLayer attribution={COPYRIGHT} url={TILE_LAYER} />
+          <Marker position={markerPositionCoords} icon={icon}>
             <Tooltip>
               Санкт-Петербург, <br /> Набережная реки Карповка, д 5П.
             </Tooltip>

@@ -7,11 +7,12 @@ import { getSelectedLocation } from '../../store/quests-data/quests-data.selecto
 import { setSelectedLocation } from '../../store/quests-data/quests-data.slice';
 import {
   COPYRIGHT,
-  TITLE_LAYER,
+  TILE_LAYER,
   activeIconConfig,
   defaultIconConfig,
 } from '../../const';
 
+const QUEST_VIEW_ZOOM = 10;
 const questsViewCoords: [number, number] = [59.93, 30.31];
 
 const activeIcon = new Icon({
@@ -41,10 +42,10 @@ function MapBooking({ questLocations }: MapBookingProps): JSX.Element {
           <MapContainer
             className="map__container"
             center={questsViewCoords}
-            zoom={10}
+            zoom={QUEST_VIEW_ZOOM}
             scrollWheelZoom={false}
           >
-            <TileLayer attribution={COPYRIGHT} url={TITLE_LAYER} />
+            <TileLayer attribution={COPYRIGHT} url={TILE_LAYER} />
 
             {questLocations &&
               questLocations.map((location: TQuestBookings['location']) => (
