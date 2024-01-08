@@ -2,12 +2,13 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { toast } from 'react-toastify';
 import {
   getAuthorizationStatus,
   getLoginStatus,
 } from '../../store/user-data/user-data.selectors';
 import { TAuthData, TLoginFormValues } from '../../types/user';
-import { checkAuth, login } from '../../store/api-actions';
+import { login } from '../../store/api-actions';
 import { AuthorizationStatus, RequestStatus } from '../../const';
 import { resetLoginStatus } from '../../store/user-data/user-data.slice';
 
@@ -30,7 +31,16 @@ function Login(): JSX.Element {
     if (authorizationStatus === AuthorizationStatus.Auth) {
       navigate(-1);
     }
-  }, [authorizationStatus, dispatch, navigate]);
+    if (loginSendingStatus === RequestStatus.Rejected) {
+      toast.error(
+        'Не удалось войти в аккаунт. Пожалуйста, попробуйте ещё раз.'
+      );
+    }
+    if (loginSendingStatus === RequestStatus.Success) {
+      toast.success('Вы успешно авторизовались!');
+    }
+    dispatch(resetLoginStatus());
+  }, [authorizationStatus, loginSendingStatus, dispatch, navigate]);
 
   const {
     register,
@@ -45,10 +55,7 @@ function Login(): JSX.Element {
     formData: TAuthData
   ) => {
     dispatch(login({ email: formData.email, password: formData.password }));
-    dispatch(resetLoginStatus());
-    dispatch(checkAuth());
     reset();
-    navigate(-1);
   };
 
   return (
