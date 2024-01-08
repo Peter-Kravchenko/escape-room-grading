@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { resetAddToBookingFetchingStatus } from '../../store/quests-data/quests-data.slice';
 import { useEffect } from 'react';
 import { getDate, getTime } from '../../utils/utils';
+import { toast } from 'react-toastify';
 
 type BookingFormProps = {
   peopleCount: TQuest['peopleMinMax'];
@@ -46,14 +47,24 @@ function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {
       placeId: selectedLocation?.id,
     } as TBookingPlaces;
     dispatch(addToBooking({ currentData, questId }));
-    dispatch(resetAddToBookingFetchingStatus());
-    navigate(AppRoute.Reservation);
-    reset();
   };
 
   useEffect(() => {
     resetField('date');
   }, [selectedLocation, resetField]);
+
+  useEffect(() => {
+    if (formSendingStatus === RequestStatus.Rejected) {
+      toast.error(
+        'Не удалось забронировать выбранный квест. Пожалуйста, попробуйте ещё раз.'
+      );
+    }
+    if (formSendingStatus === RequestStatus.Success) {
+      navigate(AppRoute.Reservation);
+      reset();
+    }
+    dispatch(resetAddToBookingFetchingStatus());
+  }, [dispatch, formSendingStatus, navigate, reset]);
 
   return (
     <form
