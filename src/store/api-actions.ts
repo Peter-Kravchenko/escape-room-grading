@@ -1,4 +1,4 @@
-import { AxiosInstance } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { TAppDispatch, TAppState } from '../types/state';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TQuest, TQuests } from '../types/quest';
@@ -7,6 +7,7 @@ import { TBookingPlaces, TQuestBookings } from '../types/booking';
 import { TReservation, TReservations } from '../types/reservations';
 import { TAuthData, TUser } from '../types/user';
 import { dropToken, saveToken } from '../services/token';
+import { toast } from 'react-toastify';
 
 type TExtra = {
   dispatch: TAppDispatch;
@@ -17,7 +18,11 @@ type TExtra = {
 export const fetchQuests = createAsyncThunk<TQuests, undefined, TExtra>(
   `${NameSpace.Quests}/fetchQuests`,
   async (_arg, { extra: api }) => {
-    const { data } = await api.get<TQuests>(APIRoute.Quest);
+    const { data } = await api
+      .get<TQuests>(APIRoute.Quest)
+      .catch((e: AxiosError) => {
+        throw toast.error(e.message);
+      });
     return data;
   }
 );
@@ -25,7 +30,11 @@ export const fetchQuests = createAsyncThunk<TQuests, undefined, TExtra>(
 export const fetchQuest = createAsyncThunk<TQuest, TQuest['id'], TExtra>(
   `${NameSpace.Quests}/fetchQuest`,
   async (questId, { extra: api }) => {
-    const { data } = await api.get<TQuest>(`${APIRoute.Quest}/${questId}`);
+    const { data } = await api
+      .get<TQuest>(`${APIRoute.Quest}/${questId}`)
+      .catch((e: AxiosError) => {
+        throw toast.error(e.message);
+      });
     return data;
   }
 );
@@ -35,9 +44,11 @@ export const fetchQuestBookings = createAsyncThunk<
   TQuestBookings['id'],
   TExtra
 >(`${NameSpace.Quests}/fetchQuestBookings`, async (questId, { extra: api }) => {
-  const { data } = await api.get<TQuestBookings>(
-    `${APIRoute.Quest}/${questId}/booking`
-  );
+  const { data } = await api
+    .get<TQuestBookings>(`${APIRoute.Quest}/${questId}/booking`)
+    .catch((e: AxiosError) => {
+      throw toast.error(e.message);
+    });
   return data;
 });
 
@@ -48,10 +59,11 @@ export const addToBooking = createAsyncThunk<
 >(
   `${NameSpace.Quests}/questBooking`,
   async ({ currentData, questId }, { extra: api }) => {
-    await api.post<TBookingPlaces>(
-      `${APIRoute.Quest}/${questId}/booking`,
-      currentData
-    );
+    await api
+      .post<TBookingPlaces>(`${APIRoute.Quest}/${questId}/booking`, currentData)
+      .catch((e: AxiosError) => {
+        throw toast.error(e.message);
+      });
   }
 );
 
@@ -62,7 +74,11 @@ export const fetchReservations = createAsyncThunk<
 >(
   `${NameSpace.Reservations}/fetchReservations`,
   async (_arg, { extra: api }) => {
-    const { data } = await api.get<TReservations>(APIRoute.Reservation);
+    const { data } = await api
+      .get<TReservations>(APIRoute.Reservation)
+      .catch((e: AxiosError) => {
+        throw toast.error(e.message);
+      });
     return data;
   }
 );
@@ -74,16 +90,22 @@ export const deleteReservation = createAsyncThunk<
 >(
   `${NameSpace.Reservations}/deleteReservation`,
   async (reservationId, { extra: api }) => {
-    await api.delete<TReservation['id']>(
-      `${APIRoute.Reservation}/${reservationId}`
-    );
+    await api
+      .delete<TReservation['id']>(`${APIRoute.Reservation}/${reservationId}`)
+      .catch((e: AxiosError) => {
+        throw toast.error(e.message);
+      });
   }
 );
 
 export const checkAuth = createAsyncThunk<TUser, undefined, TExtra>(
   `${NameSpace.User}/checkAuth`,
   async (_arg, { extra: api }) => {
-    const { data } = await api.get<TUser>(APIRoute.Login);
+    const { data } = await api
+      .get<TUser>(APIRoute.Login)
+      .catch((e: AxiosError) => {
+        throw toast.error(e.message);
+      });
     return data;
   }
 );
@@ -91,10 +113,14 @@ export const checkAuth = createAsyncThunk<TUser, undefined, TExtra>(
 export const login = createAsyncThunk<TUser, TAuthData, TExtra>(
   `${NameSpace.User}/login`,
   async ({ email, password }, { extra: api }) => {
-    const { data } = await api.post<TUser>(APIRoute.Login, {
-      email,
-      password,
-    });
+    const { data } = await api
+      .post<TUser>(APIRoute.Login, {
+        email,
+        password,
+      })
+      .catch((e: AxiosError) => {
+        throw toast.error(e.message);
+      });
     saveToken(data.token);
     return data;
   }
@@ -103,7 +129,9 @@ export const login = createAsyncThunk<TUser, TAuthData, TExtra>(
 export const logout = createAsyncThunk<void, undefined, TExtra>(
   `${NameSpace.User}/logout`,
   async (_arg, { extra: api }) => {
-    await api.delete(APIRoute.Logout);
+    await api.delete(APIRoute.Logout).catch((e: AxiosError) => {
+      throw toast.error(e.message);
+    });
     dropToken();
   }
 );

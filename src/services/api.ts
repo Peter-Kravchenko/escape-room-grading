@@ -8,7 +8,7 @@ import { getToken } from './token';
 import { toast } from 'react-toastify';
 import { StatusCodes } from 'http-status-codes';
 
-const BACKEND_URL = 'https://grading.design.pages.academy/v1/escape-room/';
+const BACKEND_URL = 'https://grading.design.htmlacademy.pro/v1/escape-room/';
 const REQUEST_TIMEOUT = 5000;
 
 type DetailMessageType = {
