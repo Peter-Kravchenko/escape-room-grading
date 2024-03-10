@@ -13,10 +13,10 @@ export const appProcess = createSlice({
   name: NameSpace.App,
   initialState,
   reducers: {
-    setActiveQuestType: (state, action: PayloadAction<QuestType>) => {
+    setActiveQuestType: (state, action: PayloadAction<QuestType | null>) => {
       state.activeQuestType = action.payload;
     },
-    setActiveQuestLevel: (state, action: PayloadAction<QuestLevel>) => {
+    setActiveQuestLevel: (state, action: PayloadAction<QuestLevel | null>) => {
       state.activeQuestLevel = action.payload;
     },
     resetFilters: (state) => {

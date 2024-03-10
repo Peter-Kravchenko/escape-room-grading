@@ -48,7 +48,7 @@ function MapBooking({ questLocations }: MapBookingProps): JSX.Element {
             <TileLayer attribution={COPYRIGHT} url={TILE_LAYER} />
 
             {questLocations &&
-              questLocations.map((location: TQuestBookings['location']) => (
+              questLocations.map((location) => (
                 <Marker
                   key={location.id}
                   position={location.location.coords}

@@ -7,14 +7,13 @@ import {
   fetchQuestBookings,
   fetchQuests,
 } from '../api-actions';
-import { TQuestBookings } from '../../types/booking';
+import { TQuestBooking } from '../../types/booking';
 
 const initialState: TQuestsData = {
   quest: null,
   quests: [],
-  questBookings: null,
+  questBookings: [],
   selectedLocatoin: null,
-  bookingInfo: null,
   questFetchingStatus: RequestStatus.Idle,
   questsFetchingStatus: RequestStatus.Idle,
   questBookingsFetchingStatus: RequestStatus.Idle,
@@ -25,7 +24,10 @@ export const questsData = createSlice({
   name: NameSpace.Quests,
   initialState,
   reducers: {
-    setSelectedLocation: (state, action: PayloadAction<TQuestBookings>) => {
+    setSelectedLocation: (
+      state,
+      action: PayloadAction<TQuestBooking | null>
+    ) => {
       state.selectedLocatoin = action.payload;
     },
     resetAddToBookingFetchingStatus: (state) => {
@@ -68,9 +70,8 @@ export const questsData = createSlice({
       .addCase(addToBooking.pending, (state) => {
         state.addToBookingFetchingStatus = RequestStatus.Pending;
       })
-      .addCase(addToBooking.fulfilled, (state, action) => {
+      .addCase(addToBooking.fulfilled, (state) => {
         state.addToBookingFetchingStatus = RequestStatus.Success;
-        state.bookingInfo = action.payload;
       })
       .addCase(addToBooking.rejected, (state) => {
         state.addToBookingFetchingStatus = RequestStatus.Rejected;

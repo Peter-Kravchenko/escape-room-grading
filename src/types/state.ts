@@ -1,7 +1,7 @@
 import { AuthorizationStatus, RequestStatus } from '../const';
 import { store } from '../store';
-import { TBookingPlaces, TQuestBookings } from './booking';
-import { TQuest, TQuests } from './quest';
+import { TQuestBooking, TQuestBookings } from './booking';
+import { TQuestFull, TQuests } from './quest';
 import { TReservations } from './reservations';
 import { TUser } from './user';
 
@@ -10,18 +10,17 @@ export type TAppState = ReturnType<typeof store.getState>;
 export type TAppDispatch = typeof store.dispatch;
 
 export type TAppProcess = {
-  questTypes: TQuest['type'][];
-  activeQuestType: TQuest['type'] | null;
-  questLevels: TQuest['level'][];
-  activeQuestLevel: TQuest['level'] | null;
+  questTypes: TQuestFull['type'][];
+  activeQuestType: TQuestFull['type'] | null;
+  questLevels: TQuestFull['level'][];
+  activeQuestLevel: TQuestFull['level'] | null;
 };
 
 export type TQuestsData = {
-  quest: TQuest | null;
-  quests: TQuests[];
-  questBookings: TQuestBookings | null;
-  selectedLocatoin: TQuestBookings | null;
-  bookingInfo: TBookingPlaces | null;
+  quest: TQuestFull | null;
+  quests: TQuests;
+  questBookings: TQuestBookings;
+  selectedLocatoin: TQuestBooking | null;
   questFetchingStatus: RequestStatus;
   questsFetchingStatus: RequestStatus;
   questBookingsFetchingStatus: RequestStatus;

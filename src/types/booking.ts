@@ -10,14 +10,16 @@ export type TSlot = {
   isAvailable: boolean;
 };
 
-export type TQuestBookings = {
+export type TQuestBooking = {
   id: string;
   location: TLocation;
   slots: {
     today: [TSlot];
     tomorrow: [TSlot];
-  }[];
+  };
 };
+
+export type TQuestBookings = TQuestBooking[];
 
 export type TBookingPlaces = {
   date: Date;

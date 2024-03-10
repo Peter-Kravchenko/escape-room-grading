@@ -1,6 +1,6 @@
 import { QuestLevel, QuestType } from '../const';
 
-export type TQuests = {
+export type TQuest = {
   id: string;
   title: string;
   previewImg: string;
@@ -10,7 +10,9 @@ export type TQuests = {
   peopleMinMax: [number, number];
 };
 
-export type TQuest = {
+export type TQuests = TQuest[];
+
+export type TQuestFull = {
   id: string;
   title: string;
   previewImg: string;

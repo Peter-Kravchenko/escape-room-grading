@@ -1,9 +1,13 @@
 import { AxiosError, AxiosInstance } from 'axios';
 import { TAppDispatch, TAppState } from '../types/state';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { TQuest, TQuests } from '../types/quest';
+import { TQuestFull, TQuests } from '../types/quest';
 import { APIRoute, NameSpace } from '../const';
-import { TBookingPlaces, TQuestBookings } from '../types/booking';
+import {
+  TBookingPlaces,
+  TQuestBooking,
+  TQuestBookings,
+} from '../types/booking';
 import { TReservation, TReservations } from '../types/reservations';
 import { TAuthData, TUser } from '../types/user';
 import { dropToken, saveToken } from '../services/token';
@@ -27,21 +31,22 @@ export const fetchQuests = createAsyncThunk<TQuests, undefined, TExtra>(
   }
 );
 
-export const fetchQuest = createAsyncThunk<TQuest, TQuest['id'], TExtra>(
-  `${NameSpace.Quests}/fetchQuest`,
-  async (questId, { extra: api }) => {
-    const { data } = await api
-      .get<TQuest>(`${APIRoute.Quest}/${questId}`)
-      .catch((e: AxiosError) => {
-        throw toast.error(e.message);
-      });
-    return data;
-  }
-);
+export const fetchQuest = createAsyncThunk<
+  TQuestFull,
+  TQuestFull['id'],
+  TExtra
+>(`${NameSpace.Quests}/fetchQuest`, async (questId, { extra: api }) => {
+  const { data } = await api
+    .get<TQuestFull>(`${APIRoute.Quest}/${questId}`)
+    .catch((e: AxiosError) => {
+      throw toast.error(e.message);
+    });
+  return data;
+});
 
 export const fetchQuestBookings = createAsyncThunk<
   TQuestBookings,
-  TQuestBookings['id'],
+  TQuestFull['id'],
   TExtra
 >(`${NameSpace.Quests}/fetchQuestBookings`, async (questId, { extra: api }) => {
   const { data } = await api
@@ -54,7 +59,7 @@ export const fetchQuestBookings = createAsyncThunk<
 
 export const addToBooking = createAsyncThunk<
   void,
-  { currentData: TBookingPlaces; questId: TQuestBookings['id'] },
+  { currentData: TBookingPlaces; questId: TQuestBooking['id'] },
   TExtra
 >(
   `${NameSpace.Quests}/questBooking`,

@@ -9,11 +9,11 @@ import {
   setActiveQuestLevel,
   setActiveQuestType,
 } from '../../store/app-process/app-process.slice';
-import { TQuests } from '../../types/quest';
+import { TQuestFull } from '../../types/quest';
 
 type FiltersProps = {
-  activeQuestType: TQuests['type'];
-  activeQuestLevel: TQuests['level'];
+  activeQuestType: TQuestFull['type'] | null;
+  activeQuestLevel: TQuestFull['level'] | null;
 };
 
 function Filters({

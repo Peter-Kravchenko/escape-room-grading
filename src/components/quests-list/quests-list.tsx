@@ -2,7 +2,7 @@ import { TQuests } from '../../types/quest';
 import QuestCard from '../quest-card/quest-card';
 
 type TQuestsListProps = {
-  quests: TQuests[];
+  quests: TQuests;
 };
 
 function QuestsList({ quests }: TQuestsListProps): JSX.Element {

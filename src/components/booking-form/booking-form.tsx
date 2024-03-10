@@ -7,7 +7,7 @@ import {
 import { TBookingFormValues, TBookingPlaces, TSlot } from '../../types/booking';
 import { addToBooking } from '../../store/api-actions';
 import { AppRoute, RequestStatus } from '../../const';
-import { TQuest } from '../../types/quest';
+import { TQuestFull } from '../../types/quest';
 import { useNavigate } from 'react-router-dom';
 import { resetAddToBookingFetchingStatus } from '../../store/quests-data/quests-data.slice';
 import { useEffect } from 'react';
@@ -15,8 +15,8 @@ import { getDate, getTime } from '../../utils/utils';
 import { toast } from 'react-toastify';
 
 type BookingFormProps = {
-  peopleCount: TQuest['peopleMinMax'];
-  questId: TQuest['id'];
+  peopleCount: TQuestFull['peopleMinMax'];
+  questId: TQuestFull['id'];
 };
 
 function BookingForm({ peopleCount, questId }: BookingFormProps): JSX.Element {

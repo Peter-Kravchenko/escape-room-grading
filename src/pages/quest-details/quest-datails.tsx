@@ -12,7 +12,7 @@ import {
   QuestTypeRus,
   RequestStatus,
 } from '../../const';
-import { TQuest } from '../../types/quest';
+import { TQuestFull } from '../../types/quest';
 import Loader from '../../components/loader/loader';
 import { limitDescriptionLength } from '../../utils/utils';
 
@@ -26,7 +26,7 @@ function QuestDetails(): JSX.Element {
     }
   }, [dispatch, id]);
 
-  const quest = useAppSelector(getQuest) as TQuest;
+  const quest = useAppSelector(getQuest) as TQuestFull;
   const questFetchingStatus = useAppSelector(getQuestFetchingStatus);
 
   if (questFetchingStatus === RequestStatus.Pending || !quest) {

@@ -1,6 +1,6 @@
 import { Date } from '../const';
 import { TLocation } from './booking';
-import { TQuests } from './quest';
+import { TQuest } from './quest';
 
 export type TReservation = {
   date: Date;
@@ -11,7 +11,7 @@ export type TReservation = {
   peopleCount: number;
   id: string;
   location: TLocation;
-  quest: TQuests;
+  quest: TQuest;
 };
 
 export type TReservations = TReservation[];

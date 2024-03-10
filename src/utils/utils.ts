@@ -1,5 +1,5 @@
 import { DESCRIPTION_LENGTH } from '../const';
-import { TQuest } from '../types/quest';
+import { TQuestFull } from '../types/quest';
 
 export const getDate = (date: string) => date.slice(0, -5);
 
@@ -13,7 +13,9 @@ export const getAdressWrap = (adress: string) => {
   };
 };
 
-export const limitDescriptionLength = (description: TQuest['description']) => {
+export const limitDescriptionLength = (
+  description: TQuestFull['description']
+) => {
   if (description.length > DESCRIPTION_LENGTH) {
     return `${description.slice(0, DESCRIPTION_LENGTH)}...`;
   }

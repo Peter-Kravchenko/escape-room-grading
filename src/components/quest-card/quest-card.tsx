@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { TQuests } from '../../types/quest';
+import { TQuest } from '../../types/quest';
 import { AppRoute, QuestLevelRus } from '../../const';
 
 type QuestCardProps = {
-  quest: TQuests;
+  quest: TQuest;
 };
 
 function QuestCard({ quest }: QuestCardProps): JSX.Element {
