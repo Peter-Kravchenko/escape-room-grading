@@ -9,7 +9,7 @@ export const COPYRIGHT =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 export const officeIconConfig: IconConfig = {
-  url: 'public/img/svg/pin-active.svg',
+  url: '/img/svg/pin-active.svg',
   width: 50,
   height: 50,
   anchorX: 25,
@@ -17,7 +17,7 @@ export const officeIconConfig: IconConfig = {
 };
 
 export const defaultIconConfig: IconConfig = {
-  url: 'public/img/svg/pin-default.svg',
+  url: '/img/svg/pin-default.svg',
   width: 30,
   height: 30,
   anchorX: 15,
@@ -25,7 +25,7 @@ export const defaultIconConfig: IconConfig = {
 };
 
 export const activeIconConfig: IconConfig = {
-  url: 'public/img/svg/pin-active.svg',
+  url: '/img/svg/pin-active.svg',
   width: 30,
   height: 30,
   anchorX: 15,
